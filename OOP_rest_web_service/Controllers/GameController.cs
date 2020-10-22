@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -43,17 +45,19 @@ namespace OOP_rest_web_service.Controllers
 
         // POST: api/Game
         [HttpPost]
-        public void Post(Unit unit)
+        public void Post(StringContent unit)
         {
-            if (map.getPlayers().Contains(unit))
-            {
-                int index = map.getPlayers().IndexOf(unit);
-                map.setPlayer(index, unit);
-            }
-            else
-            {
-                map.addPlayer(unit);
-            }
+            Debug.WriteLine(unit.ToString());
+            //Unit mapUnit = new Unit(unit.position, unit.playerColor, unit.playerSize);
+            //if (map.getPlayers().Contains(mapUnit))
+            //{
+            //    int index = map.getPlayers().IndexOf(mapUnit);
+            //    map.setPlayer(index, mapUnit);
+            //}
+            //else
+            //{
+            //    map.addPlayer(mapUnit);
+            //}
         }
 
         // PUT: api/Game/5

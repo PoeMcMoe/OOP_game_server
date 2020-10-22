@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Drawing;
 
 namespace OOP_rest_web_service.Models
 {
-    public class Unit
+    public class Unit : IEqualityComparer
     {
         public Point position { get; set; }
         // 0 - player, 1 - food
@@ -12,7 +13,7 @@ namespace OOP_rest_web_service.Models
         public Color playerColor { get; set; }
         public Size playerSize { get; set; }
 
-        public Unit(int id, Point position, Color color, Size size)
+        public Unit(Point position, Color color, Size size)
         {
             this.position = position;
             this.type = 0;
@@ -55,6 +56,22 @@ namespace OOP_rest_web_service.Models
         public void setSize(Size size)
         {
             this.playerSize = size;
+        }
+
+        public new bool Equals(object x, object y)
+        {
+            Unit X = (Unit)x;
+            Unit Y = (Unit)y;
+            if (X.playerColor == Y.playerColor && X.type == Y.type)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public int GetHashCode(object obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }
