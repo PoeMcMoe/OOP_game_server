@@ -16,8 +16,7 @@ namespace OOP_rest_web_service.Controllers
     [ApiController]
     public class GameController : ControllerBase
     {
-
-        static Map map = new Map();
+        public static Map map = new Map();
 
         static List<string> listas = new List<string>();
 
@@ -66,6 +65,8 @@ namespace OOP_rest_web_service.Controllers
             //    map.addPlayer(mapUnit);
             //}
         }
+
+        
 
         // PUT: api/Game/5
         [HttpPut("{id}")]
