@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOP_rest_web_service.Models
 {
+    [Serializable]
     public class UnitData
     {
         public Point position { get; set; }

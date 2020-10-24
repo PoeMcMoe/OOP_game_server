@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using OOP_rest_web_service.Models;
 
 namespace OOP_rest_web_service.Controllers
@@ -24,7 +25,9 @@ namespace OOP_rest_web_service.Controllers
         [HttpGet]
         public List<UnitData> Get()
         {
-            List<UnitData> list = new List<UnitData>();
+            //Debug.WriteLine("DEBUGINAM: ");
+
+            List <UnitData> list = new List<UnitData>();
             foreach (Unit f in map.getFood()){
                 list.Add(new UnitData { position = f.position, type = f.type });
             }
@@ -45,10 +48,14 @@ namespace OOP_rest_web_service.Controllers
 
         // POST: api/Game
         [HttpPost]
-        public void Post(StringContent unit)
+        public void Post([FromBody]string unit)
         {
-            Debug.WriteLine(unit.ToString());
-            //Unit mapUnit = new Unit(unit.position, unit.playerColor, unit.playerSize);
+            Debug.WriteLine("DEBUGINAM: " + unit);
+
+            //UnitData gautas = JsonConvert.DeserializeObject<UnitData>(unit);
+            //Debug.WriteLine("DEBUGINAM: " + gautas.playerColor.ToString());
+
+            //Unit mapUnit = new Unit(serialized.position, serialized.playerColor, serialized.playerSize);
             //if (map.getPlayers().Contains(mapUnit))
             //{
             //    int index = map.getPlayers().IndexOf(mapUnit);
