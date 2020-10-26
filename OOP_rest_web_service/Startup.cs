@@ -19,7 +19,7 @@ namespace OOP_rest_web_service
 {
     public class Startup
     {
-        static List<Color> allColors;
+        public static List<Color> allColors;
         public static List<DateTime> lastPosts;
         int sizeChange = 1;
         public Startup(IConfiguration configuration)
@@ -37,14 +37,10 @@ namespace OOP_rest_web_service
             allColors.Add(Color.Violet);
 
             lastPosts = new List<DateTime>();
-            lastPosts.Add(new DateTime());
-            lastPosts.Add(new DateTime());
-            lastPosts.Add(new DateTime());
-            lastPosts.Add(new DateTime());
-            lastPosts.Add(new DateTime());
-            lastPosts.Add(new DateTime());
-            lastPosts.Add(new DateTime());
-            lastPosts.Add(new DateTime());
+            for(int i = 0; i < 8; i++)
+            {
+                lastPosts.Add(DateTime.MaxValue);
+            }
 
             PeriodicMapCheck(TimeSpan.FromSeconds(0.1));
             PeriodicCollisionCheck(TimeSpan.FromSeconds(0.1));
@@ -80,9 +76,11 @@ namespace OOP_rest_web_service
             {
                 for(int i = 0; i < 8; i++)
                 {
+                    //Debug.WriteLine(i + ": " + lastPosts[i]);
                     if (DateTime.Now.Subtract(lastPosts[i]) >= TimeSpan.FromSeconds(5))
                     {
-                        GameController.map.removePlayers(i);
+                        //Debug.WriteLine("Iejom i if: " + i);
+                        GameController.map.setPlayer(i, new Unit(new Point(), Color.White, new Size()));
                     }
                 }
                 await Task.Delay(interval);
@@ -98,48 +96,78 @@ namespace OOP_rest_web_service
 
                 for (int i = 0; i < 8; i++)
                 {
-                    if (players[i] != null)
+                    if (players[i].playerColor != Color.White)
                     {
                         int x1 = players[i].position.X - players[i].playerSize.Width / 2;
                         int x2 = players[i].position.X + players[i].playerSize.Width / 2;
                         int y1 = players[i].position.Y - players[i].playerSize.Height / 2;
-                        int y2 = players[i].position.Y - players[i].playerSize.Height / 2;
+                        int y2 = players[i].position.Y + players[i].playerSize.Height / 2;
+
+                        Debug.WriteLine("x1: " + x1 + " x2: " + x2 + " y1: " + y1 + " y2: " + y2);
 
                         for(int j = 0; j < food.Count; j++)
                         {
-                            if(food[j].position.X >= x1 && food[j].position.X <= x2 && food[j].position.Y >= y1 && food[j].position.Y >= y2)
+                            int fx1 = food[j].position.X - 10 / 2;
+                            int fx2 = food[j].position.X + 10 / 2;
+                            int fy1 = food[j].position.Y - 10 / 2;
+                            int fy2 = food[j].position.Y + 10 / 2;
+
+                            Debug.WriteLine("fx1: " + fx1 + " fx2: " + fx2 + " fy1: " + fy1 + " fy2: " + fy2);
+
+                            if (doOverlap(new Point(x1, y2), new Point(x2, y1), new Point(fx1, fy2), new Point(fx2, fy1)))
                             {
+                                Debug.WriteLine("Susiconnectino!!!!!!!!!!!!!!!!!!!!!!!!");
                                 GameController.map.removeFood(j);
                                 players[i].playerSize = new Size(players[i].playerSize.Width + 1, players[i].playerSize.Height + 1);
                                 GameController.map.setPlayer(i, players[i]);
                             }
+                            //if (food[j].position.X >= x1 && food[j].position.X <= x2 && food[j].position.Y >= y1 && food[j].position.Y >= y2)
+                            //{
+                            //    GameController.map.removeFood(j);
+                            //    players[i].playerSize = new Size(players[i].playerSize.Width + 1, players[i].playerSize.Height + 1);
+                            //    GameController.map.setPlayer(i, players[i]);
+                            //}
                         }
 
-                        for (int j = 0; j < 8; j++)
-                        {
-                            if(i != j)
-                            {
-                                if (players[j].position.X >= x1 && players[j].position.X <= x2 && players[j].position.Y >= y1 && players[j].position.Y >= y2)
-                                {
-                                    if(players[i].playerSize.Width > players[j].playerSize.Width)
-                                    {
-                                        GameController.map.removePlayers(j);
-                                        players[i].playerSize = new Size(players[i].playerSize.Width + 1, players[i].playerSize.Height + 1);
-                                        GameController.map.setPlayer(i, players[i]);
-                                    }
-                                    else if(players[i].playerSize.Width < players[j].playerSize.Width)
-                                    {
-                                        GameController.map.removePlayers(i);
-                                        players[j].playerSize = new Size(players[j].playerSize.Width + 1, players[j].playerSize.Height + 1);
-                                        GameController.map.setPlayer(j, players[j]);
-                                    }
-                                }
-                            }
-                        }
+                        //for (int j = 0; j < 8; j++)
+                        //{
+                        //    if(i != j)
+                        //    {
+                        //        if (players[j].position.X >= x1 && players[j].position.X <= x2 && players[j].position.Y >= y1 && players[j].position.Y >= y2)
+                        //        {
+                        //            if(players[i].playerSize.Width > players[j].playerSize.Width)
+                        //            {
+                        //                GameController.map.removePlayers(j);
+                        //                players[i].playerSize = new Size(players[i].playerSize.Width + 1, players[i].playerSize.Height + 1);
+                        //                GameController.map.setPlayer(i, players[i]);
+                        //            }
+                        //            else if(players[i].playerSize.Width < players[j].playerSize.Width)
+                        //            {
+                        //                GameController.map.removePlayers(i);
+                        //                players[j].playerSize = new Size(players[j].playerSize.Width + 1, players[j].playerSize.Height + 1);
+                        //                GameController.map.setPlayer(j, players[j]);
+                        //            }
+                        //        }
+                        //    }
+                        //}
                     }
                 }
                 await Task.Delay(interval);
             }
+        }
+
+        // Returns true if two rectangles (l1, r1) and (l2, r2) overlap 
+        bool doOverlap(Point l1, Point r1, Point l2, Point r2)
+        {
+            // If one rectangle is on left side of other 
+            if (l1.X >= r2.X || l2.X >= r1.X)
+                return false;
+
+            // If one rectangle is above other 
+            if (l1.Y <= r2.Y || l2.Y <= r1.Y)
+                return false;
+
+            return true;
         }
     }
 }

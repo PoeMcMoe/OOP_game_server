@@ -53,6 +53,8 @@ namespace OOP_rest_web_service.Controllers
 
             Unit mapUnit = new Unit(un.position, un.playerColor, un.playerSize);
 
+            Startup.lastPosts[GetIndex(mapUnit.playerColor)] = DateTime.Now;
+
             if (map.getPlayers().Any(x => x.getColor().Equals(mapUnit.getColor())))
             {
                 int index = map.getPlayers().IndexOf(map.getPlayers().Where(x => x.getColor().Equals(mapUnit.getColor())).FirstOrDefault());
@@ -62,12 +64,16 @@ namespace OOP_rest_web_service.Controllers
             {
                 if(mapUnit.getType() != 1)
                 {
-                    map.addPlayer(mapUnit);
-
+                    map.setPlayer(GetIndex(mapUnit.playerColor), mapUnit);
                 }
             }
         }
 
+
+        int GetIndex(Color color)
+        {
+            return Startup.allColors.IndexOf(color);
+        }
         
 
         // PUT: api/Game/5
