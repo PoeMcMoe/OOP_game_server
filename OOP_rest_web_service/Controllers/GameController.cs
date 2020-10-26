@@ -49,21 +49,23 @@ namespace OOP_rest_web_service.Controllers
         [HttpPost]
         public void Post([FromBody]string unit)
         {
-            Debug.WriteLine("DEBUGINAM: " + unit);
+            UnitData un = JsonConvert.DeserializeObject<UnitData>(unit);
 
-            //UnitData gautas = JsonConvert.DeserializeObject<UnitData>(unit);
-            //Debug.WriteLine("DEBUGINAM: " + gautas.playerColor.ToString());
+            Unit mapUnit = new Unit(un.position, un.playerColor, un.playerSize);
 
-            //Unit mapUnit = new Unit(serialized.position, serialized.playerColor, serialized.playerSize);
-            //if (map.getPlayers().Contains(mapUnit))
-            //{
-            //    int index = map.getPlayers().IndexOf(mapUnit);
-            //    map.setPlayer(index, mapUnit);
-            //}
-            //else
-            //{
-            //    map.addPlayer(mapUnit);
-            //}
+            if (map.getPlayers().Any(x => x.getColor().Equals(mapUnit.getColor())))
+            {
+                int index = map.getPlayers().IndexOf(map.getPlayers().Where(x => x.getColor().Equals(mapUnit.getColor())).FirstOrDefault());
+                map.setPlayer(index, mapUnit);
+            }
+            else
+            {
+                if(mapUnit.getType() != 1)
+                {
+                    map.addPlayer(mapUnit);
+
+                }
+            }
         }
 
         

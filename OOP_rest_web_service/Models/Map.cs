@@ -76,7 +76,7 @@ namespace OOP_rest_web_service.Models
         }
         public void setPlayer(int i, Unit player)
         {
-            players.Insert(i, player);
+            players[i] = player;
         }
 
         public void removeFood(int i)
