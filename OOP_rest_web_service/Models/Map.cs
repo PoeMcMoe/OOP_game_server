@@ -15,7 +15,7 @@ namespace OOP_rest_web_service.Models
         public Map()
         {
             Random rnd = new Random();
-            int foodCount = 1;
+            int foodCount = 50;
 
             players = new List<Unit>();
             players.Add(new Unit(new Point(), Color.White, new Size()));
@@ -36,7 +36,7 @@ namespace OOP_rest_web_service.Models
                 food.Add(new Unit(new Point(rnd.Next(0, 1900), rnd.Next(0, 1000))));
             }
 
-            //food.Add(new Unit(new Point(1, 1)));
+            //food.Add(new Unit(new Point(30, 30)));
         }
 
         public void addUnit(Unit unit)

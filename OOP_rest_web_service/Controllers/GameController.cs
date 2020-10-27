@@ -31,8 +31,10 @@ namespace OOP_rest_web_service.Controllers
                 list.Add(new UnitData { position = f.position, type = f.type });
             }
 
-            foreach (Unit p in map.getPlayers())
+
+            for (int i = 0; i < map.getPlayers().Count; i++)
             {
+                Unit p = map.getPlayers()[i];
                 list.Add(new UnitData { position = p.position, type = p.type, playerColor = p.playerColor, playerSize = p.playerSize });
             }
             return list;
@@ -50,20 +52,32 @@ namespace OOP_rest_web_service.Controllers
         public void Post([FromBody]string unit)
         {
             UnitData un = JsonConvert.DeserializeObject<UnitData>(unit);
+            if(un.position.X == -9999 && un.position.Y == -9999)
+            {
+                un.playerColor = ChooseColor();
+                Debug.WriteLine("If color: " + un.playerColor);
 
-            Unit mapUnit = new Unit(un.position, un.playerColor, un.playerSize);
+            }
+
+            if (un.playerColor == Color.White) { return; }
+
+            int index = Startup.allColors.IndexOf(un.playerColor);
+
+            Debug.WriteLine("Index post: " + index + "   Color recieved: " + un.playerColor);
+
+            Unit mapUnit = new Unit(un.position, un.playerColor, map.getPlayers()[index].getSize());
 
             Startup.lastPosts[GetIndex(mapUnit.playerColor)] = DateTime.Now;
 
-            if (map.getPlayers().Any(x => x.getColor().Equals(mapUnit.getColor())))
+            if (map.getPlayers()[index].getColor() != Color.White)
             {
-                int index = map.getPlayers().IndexOf(map.getPlayers().Where(x => x.getColor().Equals(mapUnit.getColor())).FirstOrDefault());
                 map.setPlayer(index, mapUnit);
             }
             else
             {
                 if(mapUnit.getType() != 1)
                 {
+                    mapUnit.setSize(new Size(20, 20));
                     map.setPlayer(GetIndex(mapUnit.playerColor), mapUnit);
                 }
             }
@@ -86,6 +100,25 @@ namespace OOP_rest_web_service.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        Color ChooseColor()
+        {
+            Color playerColor;
+
+            Random rnd = new Random();
+
+            while(playerColor == Color.Empty)
+            {
+                Color checkingColor = Startup.allColors[rnd.Next(0, Startup.allColors.Count - 1)];
+                if(map.getPlayers().Any(x => x.getColor() != checkingColor))
+                {
+                    playerColor = checkingColor;
+                }
+
+            }
+
+            return playerColor;
         }
     }
 }
