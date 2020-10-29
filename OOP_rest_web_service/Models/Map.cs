@@ -8,11 +8,24 @@ namespace OOP_rest_web_service.Models
 {
     public class Map
     {
+        //singleton
+        private static Map instance = new Map();
+
         static public List<Unit> players;
 
         static public List<Unit> food;
 
         public Map()
+        {
+            instance.initMap();
+        }
+
+        public static Map getInstance()
+        {
+            return instance;
+        }
+
+        public void initMap()
         {
             Random rnd = new Random();
             int foodCount = 50;
@@ -35,8 +48,6 @@ namespace OOP_rest_web_service.Models
             {
                 food.Add(new Unit(new Point(rnd.Next(0, 1900), rnd.Next(0, 1000))));
             }
-
-            //food.Add(new Unit(new Point(30, 30)));
         }
 
         public void addUnit(Unit unit)

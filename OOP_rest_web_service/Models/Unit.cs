@@ -8,10 +8,12 @@ namespace OOP_rest_web_service.Models
     public class Unit : IEqualityComparer
     {
         public Point position { get; set; }
-        // 0 - player, 1 - food
-        public int type { get; set; }
         public Color playerColor { get; set; }
         public Size playerSize { get; set; }
+
+        // 0 - player, 1 - food
+        public int type { get; set; }
+
 
         public Unit(Point position, Color color, Size size)
         {

@@ -16,8 +16,6 @@ namespace OOP_rest_web_service.Controllers
     [ApiController]
     public class GameController : ControllerBase
     {
-        public static Map map = new Map();
-
         static List<string> listas = new List<string>();
 
         // GET: api/Game
@@ -27,14 +25,14 @@ namespace OOP_rest_web_service.Controllers
             //Debug.WriteLine("DEBUGINAM: ");
 
             List <UnitData> list = new List<UnitData>();
-            foreach (Unit f in map.getFood()){
+            foreach (Unit f in Map.getInstance().getFood()){
                 list.Add(new UnitData { position = f.position, type = f.type });
             }
 
 
-            for (int i = 0; i < map.getPlayers().Count; i++)
+            for (int i = 0; i < Map.getInstance().getPlayers().Count; i++)
             {
-                Unit p = map.getPlayers()[i];
+                Unit p = Map.getInstance().getPlayers()[i];
                 list.Add(new UnitData { position = p.position, type = p.type, playerColor = p.playerColor, playerSize = p.playerSize });
             }
             return list;
@@ -55,30 +53,29 @@ namespace OOP_rest_web_service.Controllers
             if(un.position.X == -9999 && un.position.Y == -9999)
             {
                 un.playerColor = ChooseColor();
-                Debug.WriteLine("If color: " + un.playerColor);
-
+                //Debug.WriteLine("If color: " + un.playerColor);
             }
 
             if (un.playerColor == Color.White) { return; }
 
             int index = Startup.allColors.IndexOf(un.playerColor);
 
-            Debug.WriteLine("Index post: " + index + "   Color recieved: " + un.playerColor);
+            //Debug.WriteLine("Index post: " + index + "   Color recieved: " + un.playerColor);
 
-            Unit mapUnit = new Unit(un.position, un.playerColor, map.getPlayers()[index].getSize());
+            Unit mapUnit = new Unit(un.position, un.playerColor, Map.getInstance().getPlayers()[index].getSize());
 
             Startup.lastPosts[GetIndex(mapUnit.playerColor)] = DateTime.Now;
 
-            if (map.getPlayers()[index].getColor() != Color.White)
+            if (Map.getInstance().getPlayers()[index].getColor() != Color.White)
             {
-                map.setPlayer(index, mapUnit);
+                Map.getInstance().setPlayer(index, mapUnit);
             }
             else
             {
                 if(mapUnit.getType() != 1)
                 {
                     mapUnit.setSize(new Size(20, 20));
-                    map.setPlayer(GetIndex(mapUnit.playerColor), mapUnit);
+                    Map.getInstance().setPlayer(GetIndex(mapUnit.playerColor), mapUnit);
                 }
             }
         }
@@ -111,7 +108,7 @@ namespace OOP_rest_web_service.Controllers
             while(playerColor == Color.Empty)
             {
                 Color checkingColor = Startup.allColors[rnd.Next(0, Startup.allColors.Count - 1)];
-                if(map.getPlayers().Any(x => x.getColor() != checkingColor))
+                if(Map.getInstance().getPlayers().Any(x => x.getColor() != checkingColor))
                 {
                     playerColor = checkingColor;
                 }

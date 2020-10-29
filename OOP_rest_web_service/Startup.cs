@@ -82,7 +82,7 @@ namespace OOP_rest_web_service
                     if (DateTime.Now.Subtract(lastPosts[i]) >= TimeSpan.FromSeconds(5))
                     {
                         //Debug.WriteLine("Iejom i if: " + i);
-                        GameController.map.setPlayer(i, new Unit(new Point(), Color.White, new Size()));
+                        Map.getInstance().setPlayer(i, new Unit(new Point(), Color.White, new Size()));
                     }
                 }
                 await Task.Delay(interval);
@@ -93,8 +93,8 @@ namespace OOP_rest_web_service
         {
             while (true)
             {
-                List<Unit> players = GameController.map.getPlayers();
-                List<Unit> food = GameController.map.getFood();
+                List<Unit> players = Map.getInstance().getPlayers();
+                List<Unit> food = Map.getInstance().getFood();
 
                 for (int i = 0; i < 8; i++)
                 {
@@ -119,11 +119,11 @@ namespace OOP_rest_web_service
                             if (doOverlap(new Point(x1, y2), new Point(x2, y1), new Point(fx1, fy2), new Point(fx2, fy1)))
                             {
                                 Debug.WriteLine("Susiconnectino!!!!!!!!!!!!!!!!!!!!!!!!");
-                                GameController.map.removeFood(j);
-                                GameController.map.addFood(new Unit(new Point(rnd.Next(0, 1900), rnd.Next(0, 1000))));
+                                Map.getInstance().removeFood(j);
+                                Map.getInstance().addFood(new Unit(new Point(rnd.Next(0, 1900), rnd.Next(0, 1000))));
 
                                 players[i].playerSize = new Size(players[i].playerSize.Width + 5, players[i].playerSize.Height + 5);
-                                GameController.map.setPlayer(i, players[i]);
+                                Map.getInstance().setPlayer(i, players[i]);
                             }
                             //if (food[j].position.X >= x1 && food[j].position.X <= x2 && food[j].position.Y >= y1 && food[j].position.Y >= y2)
                             //{
@@ -141,15 +141,15 @@ namespace OOP_rest_web_service
                                 {
                                     if (players[i].playerSize.Width > players[j].playerSize.Width)
                                     {
-                                        GameController.map.setPlayer(j, new Unit(new Point(), Color.White, new Size()));
+                                        Map.getInstance().setPlayer(j, new Unit(new Point(), Color.White, new Size()));
                                         players[i].playerSize = new Size(players[i].playerSize.Width + 15, players[i].playerSize.Height + 15);
-                                        GameController.map.setPlayer(i, players[i]);
+                                        Map.getInstance().setPlayer(i, players[i]);
                                     }
                                     else if (players[i].playerSize.Width < players[j].playerSize.Width)
                                     {
-                                        GameController.map.setPlayer(i, new Unit(new Point(), Color.White, new Size()));
+                                        Map.getInstance().setPlayer(i, new Unit(new Point(), Color.White, new Size()));
                                         players[j].playerSize = new Size(players[j].playerSize.Width + 15, players[j].playerSize.Height + 15);
-                                        GameController.map.setPlayer(j, players[j]);
+                                        Map.getInstance().setPlayer(j, players[j]);
                                     }
                                 }
                             }
