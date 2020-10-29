@@ -17,7 +17,7 @@ namespace OOP_rest_web_service.Models
 
         public Map()
         {
-            instance.initMap();
+            initMap();
         }
 
         public static Map getInstance()
@@ -31,14 +31,14 @@ namespace OOP_rest_web_service.Models
             int foodCount = 50;
 
             players = new List<Unit>();
-            players.Add(new Unit(new Point(), Color.White, new Size()));
-            players.Add(new Unit(new Point(), Color.White, new Size()));
-            players.Add(new Unit(new Point(), Color.White, new Size()));
-            players.Add(new Unit(new Point(), Color.White, new Size()));
-            players.Add(new Unit(new Point(), Color.White, new Size()));
-            players.Add(new Unit(new Point(), Color.White, new Size()));
-            players.Add(new Unit(new Point(), Color.White, new Size()));
-            players.Add(new Unit(new Point(), Color.White, new Size()));
+            players.Add(UnitCreator.createUnit(0));
+            players.Add(UnitCreator.createUnit(0));
+            players.Add(UnitCreator.createUnit(0));
+            players.Add(UnitCreator.createUnit(0));
+            players.Add(UnitCreator.createUnit(0));
+            players.Add(UnitCreator.createUnit(0));
+            players.Add(UnitCreator.createUnit(0));
+            players.Add(UnitCreator.createUnit(0));
             food = new List<Unit>();
 
             //1900 x 1000
@@ -46,13 +46,15 @@ namespace OOP_rest_web_service.Models
             //Spawn initial food
             for (int i = 0; i < foodCount; i++)
             {
-                food.Add(new Unit(new Point(rnd.Next(0, 1900), rnd.Next(0, 1000))));
+                Unit newFood = UnitCreator.createUnit(1);
+                newFood.setPosition(new Point(rnd.Next(1, 1899), rnd.Next(1, 999)));
+                food.Add(newFood);
             }
         }
 
         public void addUnit(Unit unit)
         {
-            if (unit.getType() == 0)
+            if (unit is Player)
             {
                 players.Add(unit);
             }
@@ -69,6 +71,14 @@ namespace OOP_rest_web_service.Models
         public List<Unit> getPlayers()
         {
             return players;
+        }
+        public Player GetPlayer(int i)
+        {
+            return (Player)players[i];
+        }
+        public Food GetFood(int i)
+        {
+            return (Food)food[i];
         }
 
         public Unit getFood(int i)

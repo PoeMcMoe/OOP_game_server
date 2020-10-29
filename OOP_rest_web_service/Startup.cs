@@ -82,7 +82,7 @@ namespace OOP_rest_web_service
                     if (DateTime.Now.Subtract(lastPosts[i]) >= TimeSpan.FromSeconds(5))
                     {
                         //Debug.WriteLine("Iejom i if: " + i);
-                        Map.getInstance().setPlayer(i, new Unit(new Point(), Color.White, new Size()));
+                        Map.getInstance().setPlayer(i, UnitCreator.createUnit(0));
                     }
                 }
                 await Task.Delay(interval);
@@ -93,26 +93,26 @@ namespace OOP_rest_web_service
         {
             while (true)
             {
-                List<Unit> players = Map.getInstance().getPlayers();
-                List<Unit> food = Map.getInstance().getFood();
+                List<Player> players = Map.getInstance().getPlayers().Cast<Player>().ToList();
+                List<Food> food = Map.getInstance().getFood().Cast<Food>().ToList();
 
                 for (int i = 0; i < 8; i++)
                 {
-                    if (players[i].playerColor != Color.White)
+                    if (players[i].getColor() != Color.White)
                     {
-                        int x1 = players[i].position.X - players[i].playerSize.Width / 2;
-                        int x2 = players[i].position.X + players[i].playerSize.Width / 2;
-                        int y1 = players[i].position.Y - players[i].playerSize.Height / 2;
-                        int y2 = players[i].position.Y + players[i].playerSize.Height / 2;
+                        int x1 = players[i].getPosition().X - players[i].getSize().Width / 2;
+                        int x2 = players[i].getPosition().X + players[i].getSize().Width / 2;
+                        int y1 = players[i].getPosition().Y - players[i].getSize().Height / 2;
+                        int y2 = players[i].getPosition().Y + players[i].getSize().Height / 2;
 
                         Debug.WriteLine("x1: " + x1 + " x2: " + x2 + " y1: " + y1 + " y2: " + y2);
 
                         for(int j = 0; j < food.Count; j++)
                         {
-                            int fx1 = food[j].position.X - 10 / 2;
-                            int fx2 = food[j].position.X + 10 / 2;
-                            int fy1 = food[j].position.Y - 10 / 2;
-                            int fy2 = food[j].position.Y + 10 / 2;
+                            int fx1 = food[j].getPosition().X - 10 / 2;
+                            int fx2 = food[j].getPosition().X + 10 / 2;
+                            int fy1 = food[j].getPosition().Y - 10 / 2;
+                            int fy2 = food[j].getPosition().Y + 10 / 2;
 
                             Debug.WriteLine("fx1: " + fx1 + " fx2: " + fx2 + " fy1: " + fy1 + " fy2: " + fy2);
 
@@ -120,9 +120,11 @@ namespace OOP_rest_web_service
                             {
                                 Debug.WriteLine("Susiconnectino!!!!!!!!!!!!!!!!!!!!!!!!");
                                 Map.getInstance().removeFood(j);
-                                Map.getInstance().addFood(new Unit(new Point(rnd.Next(0, 1900), rnd.Next(0, 1000))));
+                                Unit newFood = UnitCreator.createUnit(1);
+                                newFood.setPosition(new Point(rnd.Next(0, 1900), rnd.Next(0, 1000)));
+                                Map.getInstance().addFood(newFood);
 
-                                players[i].playerSize = new Size(players[i].playerSize.Width + 5, players[i].playerSize.Height + 5);
+                                players[i].setSize(new Size(players[i].getSize().Width + 5, players[i].getSize().Height + 5));
                                 Map.getInstance().setPlayer(i, players[i]);
                             }
                             //if (food[j].position.X >= x1 && food[j].position.X <= x2 && food[j].position.Y >= y1 && food[j].position.Y >= y2)
@@ -137,18 +139,18 @@ namespace OOP_rest_web_service
                         {
                             if (i != j && players[i].getColor() != Color.White && players[j].getColor() != Color.White)
                             {
-                                if (players[j].position.X >= x1 && players[j].position.X <= x2 && players[j].position.Y >= y1 && players[j].position.Y >= y2)
+                                if (players[j].getPosition().X >= x1 && players[j].getPosition().X <= x2 && players[j].getPosition().Y >= y1 && players[j].getPosition().Y >= y2)
                                 {
-                                    if (players[i].playerSize.Width > players[j].playerSize.Width)
+                                    if (players[i].getSize().Width > players[j].getSize().Width)
                                     {
-                                        Map.getInstance().setPlayer(j, new Unit(new Point(), Color.White, new Size()));
-                                        players[i].playerSize = new Size(players[i].playerSize.Width + 15, players[i].playerSize.Height + 15);
+                                        Map.getInstance().setPlayer(j, UnitCreator.createUnit(0));
+                                        players[i].setSize(new Size(players[i].getSize().Width + 15, players[i].getSize().Height + 15));
                                         Map.getInstance().setPlayer(i, players[i]);
                                     }
-                                    else if (players[i].playerSize.Width < players[j].playerSize.Width)
+                                    else if (players[i].getSize().Width < players[j].getSize().Width)
                                     {
-                                        Map.getInstance().setPlayer(i, new Unit(new Point(), Color.White, new Size()));
-                                        players[j].playerSize = new Size(players[j].playerSize.Width + 15, players[j].playerSize.Height + 15);
+                                        Map.getInstance().setPlayer(i, UnitCreator.createUnit(0));
+                                        players[j].setSize(new Size(players[j].getSize().Width + 15, players[j].getSize().Height + 15));
                                         Map.getInstance().setPlayer(j, players[j]);
                                     }
                                 }

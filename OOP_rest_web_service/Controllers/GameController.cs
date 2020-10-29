@@ -26,14 +26,13 @@ namespace OOP_rest_web_service.Controllers
 
             List <UnitData> list = new List<UnitData>();
             foreach (Unit f in Map.getInstance().getFood()){
-                list.Add(new UnitData { position = f.position, type = f.type });
+                list.Add(new UnitData { position = f.getPosition(), type = 1});
             }
-
 
             for (int i = 0; i < Map.getInstance().getPlayers().Count; i++)
             {
-                Unit p = Map.getInstance().getPlayers()[i];
-                list.Add(new UnitData { position = p.position, type = p.type, playerColor = p.playerColor, playerSize = p.playerSize });
+                Player p = (Player)Map.getInstance().getPlayers()[i];
+                list.Add(new UnitData { position = p.getPosition(), type = 0, playerColor = p.getColor(), playerSize = p.getSize() });
             }
             return list;
         }
@@ -62,21 +61,22 @@ namespace OOP_rest_web_service.Controllers
 
             //Debug.WriteLine("Index post: " + index + "   Color recieved: " + un.playerColor);
 
-            Unit mapUnit = new Unit(un.position, un.playerColor, Map.getInstance().getPlayers()[index].getSize());
+            Player mapUnit = (Player)UnitCreator.createUnit(0);
+            mapUnit.setPosition(un.position);
+            mapUnit.setColor(un.playerColor);
+            Player playerFromMap = (Player)Map.getInstance().getPlayers()[index];
+            mapUnit.setSize(playerFromMap.getSize());
 
-            Startup.lastPosts[GetIndex(mapUnit.playerColor)] = DateTime.Now;
+            Startup.lastPosts[GetIndex(mapUnit.getColor())] = DateTime.Now;
 
-            if (Map.getInstance().getPlayers()[index].getColor() != Color.White)
+            if (Map.getInstance().GetPlayer(index).getColor() != Color.White)
             {
                 Map.getInstance().setPlayer(index, mapUnit);
             }
             else
             {
-                if(mapUnit.getType() != 1)
-                {
-                    mapUnit.setSize(new Size(20, 20));
-                    Map.getInstance().setPlayer(GetIndex(mapUnit.playerColor), mapUnit);
-                }
+                mapUnit.setSize(new Size(20, 20));
+                Map.getInstance().setPlayer(GetIndex(mapUnit.getColor()), mapUnit);
             }
         }
 
@@ -108,7 +108,7 @@ namespace OOP_rest_web_service.Controllers
             while(playerColor == Color.Empty)
             {
                 Color checkingColor = Startup.allColors[rnd.Next(0, Startup.allColors.Count - 1)];
-                if(Map.getInstance().getPlayers().Any(x => x.getColor() != checkingColor))
+                if(Map.getInstance().getPlayers().Cast<Player>().Any(x =>  x.getColor() != checkingColor))
                 {
                     playerColor = checkingColor;
                 }
