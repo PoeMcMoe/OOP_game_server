@@ -49,7 +49,7 @@ namespace OOP_rest_web_service.Models
             for (int i = 0; i < foodCount; i++)
             {
                 Unit newFood;
-                if(i % 10 == 0)
+                if (i % 10 == 0)
                 {
                     newFood = UnitCreator.createUnit(2);
                 }
@@ -60,10 +60,16 @@ namespace OOP_rest_web_service.Models
                 newFood.setPosition(new Point(rnd.Next(1, 1899), rnd.Next(1, 999)));
                 food.Add(newFood);
             }
-            Unit newFosod;
-            newFosod = UnitCreator.createUnit(2);
-            newFosod.setPosition(new Point(20, 20));
-            food.Add(newFosod);
+            Unit shield;
+            shield = UnitCreator.createUnit(3);
+            shield.setPosition(new Point(50, 50));
+
+            Unit gun;
+            gun = UnitCreator.createUnit(4);
+            gun.setPosition(new Point(100, 100));
+
+            food.Add(shield);
+            food.Add(gun);
         }
 
         public void addUnit(Unit unit)
