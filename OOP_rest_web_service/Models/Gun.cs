@@ -7,5 +7,8 @@ namespace OOP_rest_web_service.Models
 {
     public class Gun : PlayerDecorator
     {
+        public Gun(AbstractPlayer o) : base(o)
+        {
+        }
     }
 }

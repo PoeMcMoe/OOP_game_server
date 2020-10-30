@@ -123,6 +123,18 @@ namespace OOP_rest_web_service
                                     players[i].setConfused(true);
                                     newFood = UnitCreator.createUnit(2);
                                 }
+                                else if(Map.getInstance().getFood()[j].getType() == 3)
+                                {
+                                    AbstractPlayer shield = new Shield(players[i]);
+                                    players[i] = (Player)shield;
+                                    Debug.WriteLine("Mano tipas yra: " + players[i].getType());
+                                }
+                                else if (Map.getInstance().getFood()[j].getType() == 4)
+                                {
+                                    AbstractPlayer gun = new Gun(players[i]);
+                                    players[i] = (Player)gun;
+                                    Debug.WriteLine("Mano tipas yra: " + players[i].getType());
+                                }
 
                                 Map.getInstance().removeFood(j);
                                 newFood.setPosition(new Point(rnd.Next(0, 1900), rnd.Next(0, 1000)));

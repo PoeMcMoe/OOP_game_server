@@ -22,6 +22,14 @@ namespace OOP_rest_web_service.Models
             {
                 return new Food(new Point(), 2);
             }
+            else if (type == 3)
+            {
+                return new Food(new Point(), 3);
+            }
+            else if (type == 4)
+            {
+                return new Food(new Point(), 4);
+            }
             else
             {
                 return null;

@@ -7,5 +7,8 @@ namespace OOP_rest_web_service.Models
 {
     public class Shield : PlayerDecorator
     {
-    }
+		public Shield(AbstractPlayer o) : base(o)
+		{
+		}
+	}
 }
