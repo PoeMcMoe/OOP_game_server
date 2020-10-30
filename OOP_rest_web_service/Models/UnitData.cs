@@ -14,5 +14,6 @@ namespace OOP_rest_web_service.Models
         public int type { get; set; }
         public Color playerColor { get; set; }
         public Size playerSize { get; set; }
+        public bool confused {get;set;}
     }
 }

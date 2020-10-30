@@ -9,6 +9,10 @@ namespace OOP_rest_web_service.Models
     {
         protected Point position;
 
+        protected int type;
+
+        protected bool confused = false;
+
         public Point getPosition()
         {
             return this.position;
@@ -20,5 +24,8 @@ namespace OOP_rest_web_service.Models
         }
 
         public abstract bool Equals(Unit other);
+
+        public int getType() { return type; }
+        public bool isConfused() { return confused; }
     }
 }

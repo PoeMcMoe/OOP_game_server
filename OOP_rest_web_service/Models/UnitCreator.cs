@@ -14,9 +14,17 @@ namespace OOP_rest_web_service.Models
             {
                 return new Player(new Point(), Color.White, new Size());
             }
+            else if(type == 1)
+            {
+                return new Food(new Point(), 1);
+            }
+            else if(type == 2)
+            {
+                return new Food(new Point(), 2);
+            }
             else
             {
-                return new Food(new Point());
+                return null;
             }
         }
     }

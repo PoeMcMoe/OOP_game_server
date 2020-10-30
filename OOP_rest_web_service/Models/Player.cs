@@ -49,5 +49,10 @@ namespace OOP_rest_web_service.Models
             }
             return false;
         }
+
+        public void setConfused(bool confused)
+        {
+            this.confused = confused;
+        }
     }
 }
