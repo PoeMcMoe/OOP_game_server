@@ -26,13 +26,13 @@ namespace OOP_rest_web_service.Controllers
 
             List <UnitData> list = new List<UnitData>();
             foreach (Unit f in Map.getInstance().getFood()){
-                list.Add(new UnitData { position = f.getPosition(), type = 1});
+                list.Add(new UnitData { position = f.getPosition(), type = f.getType()});
             }
 
             for (int i = 0; i < Map.getInstance().getPlayers().Count; i++)
             {
                 Player p = (Player)Map.getInstance().getPlayers()[i];
-                list.Add(new UnitData { position = p.getPosition(), type = 0, playerColor = p.getColor(), playerSize = p.getSize() });
+                list.Add(new UnitData { position = p.getPosition(), type = 0, playerColor = p.getColor(), playerSize = p.getSize(), confused = p.isConfused() });
             }
             return list;
         }
@@ -64,6 +64,8 @@ namespace OOP_rest_web_service.Controllers
             Player mapUnit = (Player)UnitCreator.createUnit(0);
             mapUnit.setPosition(un.position);
             mapUnit.setColor(un.playerColor);
+            mapUnit.setConfused(false);
+            Debug.WriteLine("CONFUSED IN POST: " + un.confused);
             Player playerFromMap = (Player)Map.getInstance().getPlayers()[index];
             mapUnit.setSize(playerFromMap.getSize());
 

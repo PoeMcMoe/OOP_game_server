@@ -105,7 +105,6 @@ namespace OOP_rest_web_service
                         int y1 = players[i].getPosition().Y - players[i].getSize().Height / 2;
                         int y2 = players[i].getPosition().Y + players[i].getSize().Height / 2;
 
-                        Debug.WriteLine("x1: " + x1 + " x2: " + x2 + " y1: " + y1 + " y2: " + y2);
 
                         for(int j = 0; j < food.Count; j++)
                         {
@@ -114,13 +113,18 @@ namespace OOP_rest_web_service
                             int fy1 = food[j].getPosition().Y - 10 / 2;
                             int fy2 = food[j].getPosition().Y + 10 / 2;
 
-                            Debug.WriteLine("fx1: " + fx1 + " fx2: " + fx2 + " fy1: " + fy1 + " fy2: " + fy2);
 
                             if (doOverlap(new Point(x1, y2), new Point(x2, y1), new Point(fx1, fy2), new Point(fx2, fy1)))
                             {
-                                Debug.WriteLine("Susiconnectino!!!!!!!!!!!!!!!!!!!!!!!!");
-                                Map.getInstance().removeFood(j);
                                 Unit newFood = UnitCreator.createUnit(1);
+                                
+                                if(Map.getInstance().getFood()[j].getType() == 2)
+                                {
+                                    players[i].setConfused(true);
+                                    newFood = UnitCreator.createUnit(2);
+                                }
+
+                                Map.getInstance().removeFood(j);
                                 newFood.setPosition(new Point(rnd.Next(0, 1900), rnd.Next(0, 1000)));
                                 Map.getInstance().addFood(newFood);
 

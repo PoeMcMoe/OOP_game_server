@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 
@@ -28,7 +29,7 @@ namespace OOP_rest_web_service.Models
         public void initMap()
         {
             Random rnd = new Random();
-            int foodCount = 50;
+            int foodCount = 20;
 
             players = new List<Unit>();
             players.Add(UnitCreator.createUnit(0));
@@ -44,12 +45,25 @@ namespace OOP_rest_web_service.Models
             //1900 x 1000
 
             //Spawn initial food
+            //food with 2 makes player 'confused'
             for (int i = 0; i < foodCount; i++)
             {
-                Unit newFood = UnitCreator.createUnit(1);
+                Unit newFood;
+                if(i % 10 == 0)
+                {
+                    newFood = UnitCreator.createUnit(2);
+                }
+                else
+                {
+                    newFood = UnitCreator.createUnit(1);
+                }
                 newFood.setPosition(new Point(rnd.Next(1, 1899), rnd.Next(1, 999)));
                 food.Add(newFood);
             }
+            Unit newFosod;
+            newFosod = UnitCreator.createUnit(2);
+            newFosod.setPosition(new Point(20, 20));
+            food.Add(newFosod);
         }
 
         public void addUnit(Unit unit)

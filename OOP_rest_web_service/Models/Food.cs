@@ -8,9 +8,10 @@ namespace OOP_rest_web_service.Models
 {
     public class Food : Unit
     {
-        public Food(Point position)
+        public Food(Point position, int type)
         {
             this.position = position;
+            this.type = type;
         }
 
         public override bool Equals(Unit other)
