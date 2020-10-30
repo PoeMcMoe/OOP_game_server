@@ -116,17 +116,14 @@ namespace OOP_rest_web_service
 
                             if (doOverlap(new Point(x1, y2), new Point(x2, y1), new Point(fx1, fy2), new Point(fx2, fy1)))
                             {
-                                Unit newFood;
-
+                                Unit newFood = UnitCreator.createUnit(1);
+                                
                                 if(Map.getInstance().getFood()[j].getType() == 2)
                                 {
-                                    newFood = UnitCreator.createUnit(2);
                                     players[i].setConfused(true);
+                                    newFood = UnitCreator.createUnit(2);
                                 }
-                                else
-                                {
-                                    newFood = UnitCreator.createUnit(1);
-                                }
+
                                 Map.getInstance().removeFood(j);
                                 newFood.setPosition(new Point(rnd.Next(0, 1900), rnd.Next(0, 1000)));
                                 Map.getInstance().addFood(newFood);
