@@ -100,10 +100,10 @@ namespace OOP_rest_web_service
                 {
                     if (players[i].getColor() != Color.White)
                     {
-                        int x1 = players[i].getPosition().X - players[i].getSize().Width / 2;
-                        int x2 = players[i].getPosition().X + players[i].getSize().Width / 2;
-                        int y1 = players[i].getPosition().Y - players[i].getSize().Height / 2;
-                        int y2 = players[i].getPosition().Y + players[i].getSize().Height / 2;
+                        int x1 = players[i].getPosition().X;
+                        int x2 = players[i].getPosition().X + players[i].getSize().Width;
+                        int y1 = players[i].getPosition().Y;
+                        int y2 = players[i].getPosition().Y + players[i].getSize().Height;
 
 
                         for(int j = 0; j < food.Count; j++)
@@ -128,7 +128,7 @@ namespace OOP_rest_web_service
                                 newFood.setPosition(new Point(rnd.Next(0, 1900), rnd.Next(0, 1000)));
                                 Map.getInstance().addFood(newFood);
 
-                                players[i].setSize(new Size(players[i].getSize().Width + 5, players[i].getSize().Height + 5));
+                                players[i].setSize(new Size(players[i].getSize().Width + 4, players[i].getSize().Height + 4));
                                 Map.getInstance().setPlayer(i, players[i]);
                             }
                             //if (food[j].position.X >= x1 && food[j].position.X <= x2 && food[j].position.Y >= y1 && food[j].position.Y >= y2)
