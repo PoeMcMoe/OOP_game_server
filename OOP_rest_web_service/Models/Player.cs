@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace OOP_rest_web_service.Models
 {
-    public class Player : Unit
+    public class Player : AbstractPlayer
     {
         private Color color;
         private Size size;
