@@ -64,7 +64,7 @@ namespace OOP_rest_web_service.Controllers
             Player mapUnit = (Player)UnitCreator.createUnit(0);
             mapUnit.setPosition(un.position);
             mapUnit.setColor(un.playerColor);
-            mapUnit.setConfused(un.confused);
+            mapUnit.setConfused(false);
             Debug.WriteLine("CONFUSED IN POST: " + un.confused);
             Player playerFromMap = (Player)Map.getInstance().getPlayers()[index];
             mapUnit.setSize(playerFromMap.getSize());

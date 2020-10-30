@@ -60,6 +60,10 @@ namespace OOP_rest_web_service.Models
                 newFood.setPosition(new Point(rnd.Next(1, 1899), rnd.Next(1, 999)));
                 food.Add(newFood);
             }
+            Unit newFosod;
+            newFosod = UnitCreator.createUnit(2);
+            newFosod.setPosition(new Point(20, 20));
+            food.Add(newFosod);
         }
 
         public void addUnit(Unit unit)
