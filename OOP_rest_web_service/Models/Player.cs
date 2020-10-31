@@ -9,27 +9,32 @@ namespace OOP_rest_web_service.Models
 {
     public class Player : AbstractPlayer
     {
-        public Player(Point position, Color color, Size size) : base(position, color, size)
+        private Color color;
+        private Size size;
+
+        public Player(Point position, Color color, Size size)
         {
-            
+            this.position = position;
+            this.color = color;
+            this.size = size;
         }
 
-        public override Color getColor()
+        public Color getColor()
         {
-            return base.color;
+            return this.color;
         }
-        public override Size getSize()
+        public Size getSize()
         {
-            return base.size;
+            return this.size;
         }
 
-        public override void setColor(Color color)
+        public void setColor(Color color)
         {
-            base.color = color;
+            this.color = color;
         }
-        public override void setSize(Size size)
+        public void setSize(Size size)
         {
-            base.size = size;
+            this.size = size;
         }
 
         public override bool Equals(Unit other)
@@ -45,29 +50,9 @@ namespace OOP_rest_web_service.Models
             return false;
         }
 
-        public override void setConfused(bool confused)
+        public void setConfused(bool confused)
         {
-            base.confused = confused;
-        }
-
-        public override Point getPosition()
-        {
-            return base.getPosition();
-        }
-
-        public override void setPosition(Point position)
-        {
-            base.setPosition(position);
-        }
-
-        public override void setName(string name)
-        {
-            base.setName(name);
-        }
-
-        public override string getName()
-        {
-            return base.getName();
+            this.confused = confused;
         }
     }
 }
