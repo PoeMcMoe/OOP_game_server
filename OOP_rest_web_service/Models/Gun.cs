@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace OOP_rest_web_service.Models
 {
-    public abstract class AbstractPlayer : Unit
+    public class Gun : PlayerDecorator
     {
-
+        public Gun(AbstractPlayer o) : base(o)
+        {
+        }
     }
 }

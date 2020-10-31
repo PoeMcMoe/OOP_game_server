@@ -31,7 +31,7 @@ namespace OOP_rest_web_service.Controllers
 
             for (int i = 0; i < Map.getInstance().getPlayers().Count; i++)
             {
-                AbstractPlayer p = (AbstractPlayer)Map.getInstance().getPlayers()[i];
+                Player p = (Player)Map.getInstance().getPlayers()[i];
                 list.Add(new UnitData { position = p.getPosition(), type = 0, playerColor = p.getColor(), playerSize = p.getSize(), confused = p.isConfused() });
             }
             return list;
@@ -61,27 +61,18 @@ namespace OOP_rest_web_service.Controllers
 
             //Debug.WriteLine("Index post: " + index + "   Color recieved: " + un.playerColor);
 
-            AbstractPlayer mapUnit = (AbstractPlayer)UnitCreator.createUnit(0);
+            Player mapUnit = (Player)UnitCreator.createUnit(0);
             mapUnit.setPosition(un.position);
             mapUnit.setColor(un.playerColor);
             mapUnit.setConfused(false);
-
-            AbstractPlayer playerFromMap = (AbstractPlayer)Map.getInstance().getPlayers()[index];
+            Player playerFromMap = (Player)Map.getInstance().getPlayers()[index];
             mapUnit.setSize(playerFromMap.getSize());
 
             Startup.lastPosts[GetIndex(mapUnit.getColor())] = DateTime.Now;
 
             if (Map.getInstance().GetPlayer(index).getColor() != Color.White)
             {
-                AbstractPlayer player = (AbstractPlayer)Map.getInstance().getPlayers()[index];
-                player.setPosition(un.position);
-                player.setConfused(false);
-                //Debug.WriteLine("Player name in rest: " + player.getName());
-                //Debug.WriteLine("Player position in rest: " + player.getPosition());
-                //Debug.WriteLine("Player color in rest: " + player.getColor());
-                Map.getInstance().setPlayer(index, player);
-                //Debug.WriteLine("Player FL name in rest: " + Map.getInstance().getPlayers()[index].getName());
-                //Debug.WriteLine("Player FL position in rest: " + Map.getInstance().getPlayers()[index].getPosition());
+                Map.getInstance().setPlayer(index, mapUnit);
             }
             else
             {
@@ -118,7 +109,7 @@ namespace OOP_rest_web_service.Controllers
             while(playerColor == Color.Empty)
             {
                 Color checkingColor = Startup.allColors[rnd.Next(0, Startup.allColors.Count - 1)];
-                if(Map.getInstance().getPlayers().Cast<AbstractPlayer>().Any(x =>  x.getColor() != checkingColor))
+                if(Map.getInstance().getPlayers().Cast<Player>().Any(x =>  x.getColor() != checkingColor))
                 {
                     playerColor = checkingColor;
                 }
