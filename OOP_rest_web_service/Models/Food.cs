@@ -26,5 +26,15 @@ namespace OOP_rest_web_service.Models
             }
             return false;
         }
+
+        public override Point getPosition()
+        {
+            return base.getPosition();
+        }
+
+        public override void setPosition(Point position)
+        {
+            base.setPosition(position);
+        }
     }
 }
