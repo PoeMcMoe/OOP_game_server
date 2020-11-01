@@ -4,13 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Drawing;
+using OOP_rest_web_service.Interfaces;
+using System.Diagnostics;
 
 namespace OOP_rest_web_service.Models
 {
-    public class Player : AbstractPlayer
+    public class Player : AbstractPlayer, IMyObserver
     {
         private Color color;
         private Size size;
+
+        bool foodListChanged = false;
 
         public Player(Point position, Color color, Size size)
         {
@@ -53,6 +57,21 @@ namespace OOP_rest_web_service.Models
         public void setConfused(bool confused)
         {
             this.confused = confused;
+        }
+
+        public void update()
+        {
+            foodListChanged = true;
+        }
+
+        public void setFoodListChangedFalse()
+        {
+           foodListChanged = false;
+        }
+
+        public bool getFoodListChanged()
+        {
+            return foodListChanged;
         }
     }
 }

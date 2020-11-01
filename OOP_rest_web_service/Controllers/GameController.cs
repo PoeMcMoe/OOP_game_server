@@ -16,14 +16,11 @@ namespace OOP_rest_web_service.Controllers
     [ApiController]
     public class GameController : ControllerBase
     {
-        static List<string> listas = new List<string>();
-
         // GET: api/Game
+        //Gets everything
         [HttpGet]
         public List<UnitData> Get()
         {
-            //Debug.WriteLine("DEBUGINAM: ");
-
             List <UnitData> list = new List<UnitData>();
             foreach (Unit f in Map.getInstance().getFood()){
                 list.Add(new UnitData { position = f.getPosition(), type = f.getType()});
@@ -33,6 +30,33 @@ namespace OOP_rest_web_service.Controllers
             {
                 Player p = (Player)Map.getInstance().getPlayers()[i];
                 list.Add(new UnitData { position = p.getPosition(), type = 0, playerColor = p.getColor(), playerSize = p.getSize(), confused = p.isConfused() });
+            }
+
+            return list;
+        }
+
+        [Route("players")]
+        [HttpGet]
+        public List<UnitData> GetPlayers()
+        {
+            List<UnitData> list = new List<UnitData>();
+            for (int i = 0; i < Map.getInstance().getPlayers().Count; i++)
+            {
+                Player p = (Player)Map.getInstance().getPlayers()[i];
+                list.Add(new UnitData { position = p.getPosition(), type = 0, playerColor = p.getColor(), playerSize = p.getSize(), confused = p.isConfused(), foodListChanged = p.getFoodListChanged() });
+            }
+
+            return list;
+        }
+
+        [Route("food")]
+        [HttpGet]
+        public List<UnitData> GetFood()
+        {
+            List<UnitData> list = new List<UnitData>();
+            foreach (Unit f in Map.getInstance().getFood())
+            {
+                list.Add(new UnitData { position = f.getPosition(), type = f.getType() });
             }
             return list;
         }
@@ -52,19 +76,16 @@ namespace OOP_rest_web_service.Controllers
             if(un.position.X == -9999 && un.position.Y == -9999)
             {
                 un.playerColor = ChooseColor();
-                //Debug.WriteLine("If color: " + un.playerColor);
             }
 
             if (un.playerColor == Color.White) { return; }
 
             int index = Startup.allColors.IndexOf(un.playerColor);
 
-            //Debug.WriteLine("Index post: " + index + "   Color recieved: " + un.playerColor);
-
             Player mapUnit = (Player)UnitCreator.createUnit(0);
             mapUnit.setPosition(un.position);
             mapUnit.setColor(un.playerColor);
-            mapUnit.setConfused(false);
+
             Player playerFromMap = (Player)Map.getInstance().getPlayers()[index];
             mapUnit.setSize(playerFromMap.getSize());
 
@@ -72,11 +93,15 @@ namespace OOP_rest_web_service.Controllers
 
             if (Map.getInstance().GetPlayer(index).getColor() != Color.White)
             {
-                Map.getInstance().setPlayer(index, mapUnit);
+                Player player = (Player)Map.getInstance().getPlayers()[index];
+                player.setPosition(mapUnit.getPosition());
+                player.setConfused(false);
+                player.setFoodListChangedFalse();
             }
             else
             {
                 mapUnit.setSize(new Size(20, 20));
+                Map.getInstance().register(mapUnit);
                 Map.getInstance().setPlayer(GetIndex(mapUnit.getColor()), mapUnit);
             }
         }

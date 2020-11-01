@@ -117,7 +117,7 @@ namespace OOP_rest_web_service
                             if (doOverlap(new Point(x1, y2), new Point(x2, y1), new Point(fx1, fy2), new Point(fx2, fy1)))
                             {
                                 Unit newFood = UnitCreator.createUnit(1);
-                                
+                                Debug.WriteLine("players[i] Type = " + players[i].getType() + "   " + players[i].GetType());
                                 if(Map.getInstance().getFood()[j].getType() == 2)
                                 {
                                     players[i].setConfused(true);
@@ -128,6 +128,8 @@ namespace OOP_rest_web_service
                                     AbstractPlayer shield = new Shield(players[i]);
                                     players[i] = (Player)shield;
                                     Debug.WriteLine("Mano tipas yra: " + players[i].getType());
+                                    Debug.WriteLine("Shielde pos " + players[i].getPosition());
+
                                 }
                                 else if (Map.getInstance().getFood()[j].getType() == 4)
                                 {
@@ -139,9 +141,11 @@ namespace OOP_rest_web_service
                                 Map.getInstance().removeFood(j);
                                 newFood.setPosition(new Point(rnd.Next(0, 1900), rnd.Next(0, 1000)));
                                 Map.getInstance().addFood(newFood);
+                                Map.getInstance().notifyObservers();
 
                                 players[i].setSize(new Size(players[i].getSize().Width + 4, players[i].getSize().Height + 4));
                                 Map.getInstance().setPlayer(i, players[i]);
+
                             }
                             //if (food[j].position.X >= x1 && food[j].position.X <= x2 && food[j].position.Y >= y1 && food[j].position.Y >= y2)
                             //{

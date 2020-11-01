@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OOP_rest_web_service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,7 +8,7 @@ using System.Linq;
 
 namespace OOP_rest_web_service.Models
 {
-    public class Map
+    public class Map : ISubject
     {
         //singleton
         private static Map instance = new Map();
@@ -15,6 +16,11 @@ namespace OOP_rest_web_service.Models
         static public List<Unit> players;
 
         static public List<Unit> food;
+
+        static private List<IMyObserver> observersList;
+
+        Unit foodItem = UnitCreator.createUnit(1);
+        Unit confuseFoodItem = UnitCreator.createUnit(2);
 
         public Map()
         {
@@ -29,6 +35,8 @@ namespace OOP_rest_web_service.Models
         public void initMap()
         {
             Random rnd = new Random();
+            CloneFactory cloneFactory = new CloneFactory();
+            observersList = new List<IMyObserver>();
             int foodCount = 20;
 
             players = new List<Unit>();
@@ -46,30 +54,22 @@ namespace OOP_rest_web_service.Models
 
             //Spawn initial food
             //food with 2 makes player 'confused'
+
+            Food clonedFoodItem;
             for (int i = 0; i < foodCount; i++)
             {
-                Unit newFood;
                 if (i % 10 == 0)
                 {
-                    newFood = UnitCreator.createUnit(2);
+                    clonedFoodItem = (Food)cloneFactory.getClone(confuseFoodItem);
                 }
                 else
                 {
-                    newFood = UnitCreator.createUnit(1);
+                    clonedFoodItem = (Food)cloneFactory.getClone(foodItem);
                 }
-                newFood.setPosition(new Point(rnd.Next(1, 1899), rnd.Next(1, 999)));
-                food.Add(newFood);
+                Debug.WriteLine("Food clone hash: " + clonedFoodItem.GetHashCode());
+                clonedFoodItem.setPosition(new Point(rnd.Next(1, 1899), rnd.Next(1, 999)));
+                food.Add(clonedFoodItem);
             }
-            Unit shield;
-            shield = UnitCreator.createUnit(3);
-            shield.setPosition(new Point(50, 50));
-
-            Unit gun;
-            gun = UnitCreator.createUnit(4);
-            gun.setPosition(new Point(100, 100));
-
-            food.Add(shield);
-            food.Add(gun);
         }
 
         public void addUnit(Unit unit)
@@ -135,6 +135,30 @@ namespace OOP_rest_web_service.Models
         public void removePlayers(int i)
         {
             players.RemoveAt(i);
+        }
+
+        public void register(IMyObserver newObserver)
+        {
+            observersList.Add(newObserver);
+        }
+
+        public void unregister(IMyObserver observer)
+        {
+            observersList.Remove(observer);
+        }
+
+        public void notifyObservers()
+        {
+            for (int i = 0; i < observersList.Count; i++)
+            {
+                observersList[i].update();
+
+            }
+        }
+
+        public void setPlayerPostition(int index, Point location)
+        {
+            players[index].setPosition(location);
         }
     }
 }
