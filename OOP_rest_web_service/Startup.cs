@@ -100,10 +100,10 @@ namespace OOP_rest_web_service
                 {
                     if (players[i].getColor() != Color.White)
                     {
-                        int x1 = players[i].getPosition().X - players[i].getSize().Width / 2;
-                        int x2 = players[i].getPosition().X + players[i].getSize().Width / 2;
-                        int y1 = players[i].getPosition().Y - players[i].getSize().Height / 2;
-                        int y2 = players[i].getPosition().Y + players[i].getSize().Height / 2;
+                        int x1 = players[i].getPosition().X;
+                        int x2 = players[i].getPosition().X + players[i].getSize().Width;
+                        int y1 = players[i].getPosition().Y;
+                        int y2 = players[i].getPosition().Y + players[i].getSize().Height;
 
 
                         for(int j = 0; j < food.Count; j++)
