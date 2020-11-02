@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace OOP_rest_web_service.Models
 {
-    public class Shield : PlayerDecorator
+    public class SizeUp : PlayerDecorator
     {
-        public Shield(AbstractPlayer o) : base(o)
+        public SizeUp(AbstractPlayer o) : base(o)
         {
-
         }
 
         public override Point getPosition()
@@ -30,7 +29,7 @@ namespace OOP_rest_web_service.Models
 
         public override string getName()
         {
-            return wrappee.getName() + ";Shield";
+            return wrappee.getName() + ";SizeUp";
         }
 
         public override Color getColor()
@@ -54,6 +53,22 @@ namespace OOP_rest_web_service.Models
         public override void setConfused(bool confused)
         {
             wrappee.setConfused(confused);
+        }
+
+
+        public override bool getFoodListChanged()
+        {
+            return base.getFoodListChanged();
+        }
+
+        public override void setFoodListChangedFalse()
+        {
+            base.setFoodListChangedFalse();
+        }
+
+        public override void update()
+        {
+            base.update();
         }
     }
 }

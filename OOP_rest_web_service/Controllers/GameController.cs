@@ -21,17 +21,19 @@ namespace OOP_rest_web_service.Controllers
         [HttpGet]
         public List<UnitData> Get()
         {
-            List <UnitData> list = new List<UnitData>();
-            foreach (Unit f in Map.getInstance().getFood()){
-                list.Add(new UnitData { position = f.getPosition(), type = f.getType()});
+            //Debug.WriteLine("DEBUGINAM: ");
+
+            List<UnitData> list = new List<UnitData>();
+            foreach (Unit f in Map.getInstance().getFood())
+            {
+                list.Add(new UnitData { position = f.getPosition(), type = f.getType() });
             }
 
             for (int i = 0; i < Map.getInstance().getPlayers().Count; i++)
             {
-                Player p = (Player)Map.getInstance().getPlayers()[i];
+                AbstractPlayer p = (AbstractPlayer)Map.getInstance().getPlayers()[i];
                 list.Add(new UnitData { position = p.getPosition(), type = 0, playerColor = p.getColor(), playerSize = p.getSize(), confused = p.isConfused() });
             }
-
             return list;
         }
 
@@ -42,7 +44,7 @@ namespace OOP_rest_web_service.Controllers
             List<UnitData> list = new List<UnitData>();
             for (int i = 0; i < Map.getInstance().getPlayers().Count; i++)
             {
-                Player p = (Player)Map.getInstance().getPlayers()[i];
+                AbstractPlayer p = (AbstractPlayer)Map.getInstance().getPlayers()[i];
                 list.Add(new UnitData { position = p.getPosition(), type = 0, playerColor = p.getColor(), playerSize = p.getSize(), confused = p.isConfused(), foodListChanged = p.getFoodListChanged() });
             }
 
@@ -82,21 +84,24 @@ namespace OOP_rest_web_service.Controllers
 
             int index = Startup.allColors.IndexOf(un.playerColor);
 
-            Player mapUnit = (Player)UnitCreator.createUnit(0);
+            AbstractPlayer mapUnit = (AbstractPlayer)UnitCreator.createUnit(0);
             mapUnit.setPosition(un.position);
             mapUnit.setColor(un.playerColor);
+            mapUnit.setConfused(false);
 
-            Player playerFromMap = (Player)Map.getInstance().getPlayers()[index];
+            AbstractPlayer playerFromMap = (AbstractPlayer)Map.getInstance().getPlayers()[index];
             mapUnit.setSize(playerFromMap.getSize());
 
             Startup.lastPosts[GetIndex(mapUnit.getColor())] = DateTime.Now;
 
             if (Map.getInstance().GetPlayer(index).getColor() != Color.White)
             {
-                Player player = (Player)Map.getInstance().getPlayers()[index];
+                AbstractPlayer player = (AbstractPlayer)Map.getInstance().getPlayers()[index];
                 player.setPosition(mapUnit.getPosition());
                 player.setConfused(false);
                 player.setFoodListChangedFalse();
+
+                Map.getInstance().setPlayer(index, player);
             }
             else
             {

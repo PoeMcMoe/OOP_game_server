@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace OOP_rest_web_service.Models
 {
-    public class PlayerDecorator : AbstractPlayer
+    public abstract class PlayerDecorator : AbstractPlayer
     {
         protected AbstractPlayer wrappee;
 
-        public PlayerDecorator(AbstractPlayer player)
+        public PlayerDecorator(AbstractPlayer player) : base(player.getPosition(), player.getColor(), player.getSize())
         {
             this.wrappee = player;
         }

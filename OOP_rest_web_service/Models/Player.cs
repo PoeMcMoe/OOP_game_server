@@ -11,34 +11,28 @@ namespace OOP_rest_web_service.Models
 {
     public class Player : AbstractPlayer, IMyObserver
     {
-        private Color color;
-        private Size size;
 
-        bool foodListChanged = false;
-
-        public Player(Point position, Color color, Size size)
+        public Player(Point position, Color color, Size size) : base(position, color, size)
         {
-            this.position = position;
-            this.color = color;
-            this.size = size;
+
         }
 
-        public Color getColor()
+        public override Color getColor()
         {
-            return this.color;
+            return base.color;
         }
-        public Size getSize()
+        public override Size getSize()
         {
-            return this.size;
+            return base.size;
         }
 
-        public void setColor(Color color)
+        public override void setColor(Color color)
         {
-            this.color = color;
+            base.color = color;
         }
-        public void setSize(Size size)
+        public override void setSize(Size size)
         {
-            this.size = size;
+            base.size = size;
         }
 
         public override bool Equals(Unit other)
@@ -54,24 +48,44 @@ namespace OOP_rest_web_service.Models
             return false;
         }
 
-        public void setConfused(bool confused)
+        public override void update()
         {
-            this.confused = confused;
+            base.update();
         }
 
-        public void update()
+        public override void setFoodListChangedFalse()
         {
-            foodListChanged = true;
+            base.setFoodListChangedFalse();
         }
 
-        public void setFoodListChangedFalse()
+        public override bool getFoodListChanged()
         {
-           foodListChanged = false;
+            return base.getFoodListChanged();
         }
 
-        public bool getFoodListChanged()
+        public override void setConfused(bool confused)
         {
-            return foodListChanged;
+            base.confused = confused;
+        }
+
+        public override Point getPosition()
+        {
+            return base.getPosition();
+        }
+
+        public override void setPosition(Point position)
+        {
+            base.setPosition(position);
+        }
+
+        public override void setName(string name)
+        {
+            base.setName(name);
+        }
+
+        public override string getName()
+        {
+            return base.getName();
         }
     }
 }
