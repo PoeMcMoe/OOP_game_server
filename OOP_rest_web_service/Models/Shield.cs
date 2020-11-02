@@ -55,5 +55,20 @@ namespace OOP_rest_web_service.Models
         {
             wrappee.setConfused(confused);
         }
+
+        public override bool getFoodListChanged()
+        {
+            return base.getFoodListChanged();
+        }
+
+        public override void setFoodListChangedFalse()
+        {
+            base.setFoodListChangedFalse();
+        }
+
+        public override void update()
+        {
+            base.update();
+        }
     }
 }
