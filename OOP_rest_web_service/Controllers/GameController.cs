@@ -70,6 +70,26 @@ namespace OOP_rest_web_service.Controllers
             return "value";
         }
 
+        // GET: api/Game/rewind
+        [Route("rewind/{colorname}/{command}")]
+        [HttpGet]
+        public void Rewind(string command, string colorname)
+        {
+            Color playerColor = Color.FromName(colorname);
+            int index = Startup.allColors.IndexOf(playerColor);
+            Player player = (Player)Map.getInstance().getPlayers()[index];
+            if(command == "set")
+            {
+                RewindCommand rew = new RewindCommand(player);
+                Startup.commandInvoker.SetCommand(rew);
+                Startup.commandInvoker.ExecuteCommand();
+            }
+            if (command == "trigger" && Startup.commandInvoker.CommandExists())
+            { 
+                Startup.commandInvoker.UndoCommand();
+            }
+        }
+
         // POST: api/Game
         [HttpPost]
         public void Post([FromBody]string unit)

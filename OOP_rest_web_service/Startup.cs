@@ -22,6 +22,7 @@ namespace OOP_rest_web_service
         public static List<bool> allHitboxes;
         public static List<Color> allColors;
         public static List<DateTime> lastPosts;
+        public static CommandInvoker commandInvoker;
 
         int sizeChange = 1;
 
@@ -29,6 +30,7 @@ namespace OOP_rest_web_service
 
         public Startup(IConfiguration configuration)
         {
+            commandInvoker = new CommandInvoker();
             Configuration = configuration;
 
             allColors = new List<Color>();
