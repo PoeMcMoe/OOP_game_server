@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 
 namespace OOP_rest_web_service.Models
 {
-    public class Gun : PlayerDecorator
+    public class CloneFactory
     {
-        public Gun(AbstractPlayer o) : base(o)
+        public Unit getClone(Unit unitToClone)
         {
+            return (Unit)unitToClone.Clone();
         }
     }
 }

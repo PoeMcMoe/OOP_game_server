@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace OOP_rest_web_service.Models
 {
-    public class Shield : PlayerDecorator
+    public class SizeDown : PlayerDecorator
     {
-        public Shield(AbstractPlayer o) : base(o)
+        public SizeDown(AbstractPlayer o) : base(o)
         {
-
         }
 
         public override Point getPosition()
@@ -30,7 +29,7 @@ namespace OOP_rest_web_service.Models
 
         public override string getName()
         {
-            return wrappee.getName() + ";Shield";
+            return wrappee.getName() + ";SizeDown";
         }
 
         public override Color getColor()

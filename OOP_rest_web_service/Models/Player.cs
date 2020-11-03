@@ -4,37 +4,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Drawing;
+using OOP_rest_web_service.Interfaces;
+using System.Diagnostics;
 
 namespace OOP_rest_web_service.Models
 {
-    public class Player : AbstractPlayer
+    public class Player : AbstractPlayer, IMyObserver
     {
-        private Color color;
-        private Size size;
 
-        public Player(Point position, Color color, Size size)
+        public Player(Point position, Color color, Size size) : base(position, color, size)
         {
-            this.position = position;
-            this.color = color;
-            this.size = size;
+
         }
 
-        public Color getColor()
+        public override Color getColor()
         {
-            return this.color;
+            return base.color;
         }
-        public Size getSize()
+        public override Size getSize()
         {
-            return this.size;
+            return base.size;
         }
 
-        public void setColor(Color color)
+        public override void setColor(Color color)
         {
-            this.color = color;
+            base.color = color;
         }
-        public void setSize(Size size)
+        public override void setSize(Size size)
         {
-            this.size = size;
+            base.size = size;
         }
 
         public override bool Equals(Unit other)
@@ -50,9 +48,44 @@ namespace OOP_rest_web_service.Models
             return false;
         }
 
-        public void setConfused(bool confused)
+        public override void update()
         {
-            this.confused = confused;
+            base.update();
+        }
+
+        public override void setFoodListChangedFalse()
+        {
+            base.setFoodListChangedFalse();
+        }
+
+        public override bool getFoodListChanged()
+        {
+            return base.getFoodListChanged();
+        }
+
+        public override void setConfused(bool confused)
+        {
+            base.confused = confused;
+        }
+
+        public override Point getPosition()
+        {
+            return base.getPosition();
+        }
+
+        public override void setPosition(Point position)
+        {
+            base.setPosition(position);
+        }
+
+        public override void setName(string name)
+        {
+            base.setName(name);
+        }
+
+        public override string getName()
+        {
+            return base.getName();
         }
     }
 }
