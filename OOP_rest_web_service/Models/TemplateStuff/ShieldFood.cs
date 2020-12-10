@@ -4,11 +4,11 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OOP_rest_web_service.Models
+namespace OOP_rest_web_service.Models.TemplateStuff
 {
-    public class Food : FoodTemplate
+    public class ShieldFood : FoodTemplate
     {
-        public Food(Point position)
+        public ShieldFood(Point position)
         {
             this.position = position;
         }
@@ -24,6 +24,11 @@ namespace OOP_rest_web_service.Models
                 }
             }
             return false;
+        }
+
+        public override bool isShield()
+        {
+            return true;
         }
     }
 }

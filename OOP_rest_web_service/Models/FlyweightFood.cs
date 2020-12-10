@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOP_rest_web_service.Models.TemplateStuff;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,9 +11,9 @@ namespace OOP_rest_web_service.Models
 {
     public class FlyweightFood
     {
-        private static Dictionary<Point, Food> foodDictionary = new Dictionary<Point, Food>();
+        private static Dictionary<Point, Unit> foodDictionary = new Dictionary<Point, Unit>();
 
-        public static Food GetFood(Point point)
+        public static Unit GetFood(Point point)
         {
             try
             {
@@ -21,7 +22,32 @@ namespace OOP_rest_web_service.Models
             catch (KeyNotFoundException e)
             {
                 Random random = new Random();
-                Food food = new Food(point, random.Next(1, 5));
+                FoodTemplate food = null;
+                switch (random.Next(1, 5))
+                {
+                    case 1:
+                        food = new Food(point);
+                        food.makeFood();
+                        break;
+                    case 2:
+                        food = new ConfuseFood(point);
+                        food.makeFood();
+                        break;
+                    case 3:
+                        food = new ShieldFood(point);
+                        food.makeFood();
+                        break;
+                    case 4:
+                        food = new SizeUpFood(point);
+                        food.makeFood();
+                        break;
+                    case 5:
+                        food = new SizeDownFood(point);
+                        food.makeFood();
+                        break;
+                    default:
+                        break;
+                }
                 foodDictionary.Add(point, food);
                 return food;
             }

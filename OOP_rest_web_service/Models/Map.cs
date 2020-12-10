@@ -90,7 +90,9 @@ namespace OOP_rest_web_service.Models
             // food.Add(sizeDown);
             for (int i = 0; i < 50; i++)
             {
-                food.Add(FlyweightFood.GetFood(new Point(rnd.Next(1,1899), rnd.Next(1, 999))));
+                Unit addFood = FlyweightFood.GetFood(new Point(rnd.Next(1, 1899), rnd.Next(1, 999)));
+                Debug.WriteLine("DEBUGGING FOOD: " + addFood.getType());
+                food.Add(addFood);
             }
         }
 
