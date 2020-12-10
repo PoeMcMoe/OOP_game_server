@@ -10,17 +10,20 @@ namespace OOP_rest_web_service.Models
     {
         protected string name = "default";
 
+        //Food/Player
         protected Point position;
 
         protected int type;
 
         protected bool confused = false;
 
+        //Food/Player
         public virtual Point getPosition()
         {
             return this.position;
         }
 
+        //Food/Player
         public virtual void setPosition(Point position)
         {
             this.position = position;
@@ -38,6 +41,7 @@ namespace OOP_rest_web_service.Models
 
         public abstract bool Equals(Unit other);
 
+        //Food/Player
         public int getType() { return type; }
         public bool isConfused() { return confused; }
 

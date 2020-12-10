@@ -55,39 +55,43 @@ namespace OOP_rest_web_service.Models
             //Spawn initial food
             //food with 2 makes player 'confused'
 
-            Food clonedFoodItem;
-            for (int i = 0; i < foodCount; i++)
+            //Food clonedFoodItem;
+            //for (int i = 0; i < foodCount; i++)
+            //{
+            //    if (i % 10 == 0)
+            //    {
+            //        clonedFoodItem = (Food)cloneFactory.getClone(confuseFoodItem);
+            //    }
+            //    else
+            //    {
+            //        clonedFoodItem = (Food)cloneFactory.getClone(foodItem);
+            //    }
+            //    Debug.WriteLine("Food clone hash: " + clonedFoodItem.GetHashCode());
+            //    clonedFoodItem.setPosition(new Point(rnd.Next(1, 1899), rnd.Next(1, 999)));
+            //    food.Add(clonedFoodItem);
+            //}
+
+
+            //Unit shield;
+            //shield = UnitCreator.createUnit(3);
+            //shield.setPosition(new Point(50, 50));
+
+            //food.Add(shield);
+
+            // Unit sizeUp;
+            // sizeUp = UnitCreator.createUnit(4);
+            // sizeUp.setPosition(new Point(100, 100));
+
+            // Unit sizeDown;
+            // sizeDown = UnitCreator.createUnit(5);
+            // sizeDown.setPosition(new Point(150, 150));
+
+            // food.Add(sizeUp);
+            // food.Add(sizeDown);
+            for (int i = 0; i < 50; i++)
             {
-                if (i % 10 == 0)
-                {
-                    clonedFoodItem = (Food)cloneFactory.getClone(confuseFoodItem);
-                }
-                else
-                {
-                    clonedFoodItem = (Food)cloneFactory.getClone(foodItem);
-                }
-                Debug.WriteLine("Food clone hash: " + clonedFoodItem.GetHashCode());
-                clonedFoodItem.setPosition(new Point(rnd.Next(1, 1899), rnd.Next(1, 999)));
-                food.Add(clonedFoodItem);
+                food.Add(FlyweightFood.GetFood(new Point(rnd.Next(1,1899), rnd.Next(1, 999))));
             }
-
-
-            Unit shield;
-            shield = UnitCreator.createUnit(3);
-            shield.setPosition(new Point(50, 50));
-
-            food.Add(shield);
-
-             Unit sizeUp;
-             sizeUp = UnitCreator.createUnit(4);
-             sizeUp.setPosition(new Point(100, 100));
-
-             Unit sizeDown;
-             sizeDown = UnitCreator.createUnit(5);
-             sizeDown.setPosition(new Point(150, 150));
-
-             food.Add(sizeUp);
-             food.Add(sizeDown);
         }
 
         public void addUnit(Unit unit)
