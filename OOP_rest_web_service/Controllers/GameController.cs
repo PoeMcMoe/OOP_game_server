@@ -23,16 +23,30 @@ namespace OOP_rest_web_service.Controllers
         {
             //Debug.WriteLine("DEBUGINAM: ");
 
-            List<UnitData> list = new List<UnitData>();
+            /*List<UnitData> list = new List<UnitData>();
             foreach (Unit f in Map.getInstance().getFood())
             {
                 list.Add(new UnitData { position = f.getPosition(), type = f.getType() });
             }
-
+            
             for (int i = 0; i < Map.getInstance().getPlayers().Count; i++)
             {
                 AbstractPlayer p = (AbstractPlayer)Map.getInstance().getPlayers()[i];
                 list.Add(new UnitData { position = p.getPosition(), type = 0, playerColor = p.getColor(), playerSize = p.getSize(), confused = p.isConfused() });
+            }
+            */
+            List<UnitData> list = new List<UnitData>();
+            foreach(Unit u in Map.getInstance().getUnits())
+            {
+                if(u.getType() == 0)
+                {
+                    AbstractPlayer p = (AbstractPlayer)u;
+                    list.Add(new UnitData { position = p.getPosition(), type = 0, playerColor = p.getColor(), playerSize = p.getSize(), confused = p.isConfused() });
+                }
+                else
+                {
+                    list.Add(new UnitData { position = u.getPosition(), type = u.getType() });
+                }
             }
             return list;
         }

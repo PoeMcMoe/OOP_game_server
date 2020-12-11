@@ -26,7 +26,7 @@ namespace OOP_rest_web_service.Models
                 switch (random.Next(1, 5))
                 {
                     case 1:
-                        food = new Food(point);
+                        food = new TemplateFood(point);
                         food.makeFood();
                         break;
                     case 2:
@@ -34,7 +34,7 @@ namespace OOP_rest_web_service.Models
                         food.makeFood();
                         break;
                     case 3:
-                        food = new ShieldFood(point);
+                        food = new TemplateFood(point);
                         food.makeFood();
                         break;
                     case 4:

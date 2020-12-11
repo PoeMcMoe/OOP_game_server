@@ -17,6 +17,8 @@ namespace OOP_rest_web_service.Models
 
         protected bool confused = false;
 
+        public int index;
+
         //Food/Player
         public virtual Point getPosition()
         {

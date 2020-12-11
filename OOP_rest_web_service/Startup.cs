@@ -182,7 +182,14 @@ namespace OOP_rest_web_service
                 List<AbstractPlayer> players = Map.getInstance().getPlayers().Cast<AbstractPlayer>().ToList();
                 //Player somePlayer = (Player)players[1];
                 //Debug.WriteLine("Some player color: " + somePlayer.getColor());
-                List<Food> food = Map.getInstance().getFood().Cast<Food>().ToList();
+                //List<Food> food = Map.getInstance().getFood().Cast<Food>().ToList();
+
+                List<FoodTemplate> food = new List<FoodTemplate>();
+                foreach(Unit u in Map.getInstance().getFood())
+                {
+                    FoodTemplate f = (FoodTemplate)u;
+                    food.Add(f);
+                }
 
                 for (int i = 0; i < 8; i++)
                 {
@@ -202,9 +209,11 @@ namespace OOP_rest_web_service
                             int fy1 = food[j].getPosition().Y - 10 / 2;
                             int fy2 = food[j].getPosition().Y + 10 / 2;
 
-
+                            Debug.WriteLine("Food x1 {0}, y1 {1}  \nPlayer x1 {2}  y1 {3}", fx1, fy1, x1, y1);
                             if (doOverlap(new Point(x1, y2), new Point(x2, y1), new Point(fx1, fy2), new Point(fx2, fy1)))
                             {
+                                Debug.WriteLine("OVERLAP DETECTED");
+
                                 //Debug.WriteLine("Overlapped x1: " + x1 + " x2: " + x2 + " y1: " + y1 + " y2: " + y2);
                                 Unit newFood = UnitCreator.createUnit(1);
 
@@ -217,52 +226,28 @@ namespace OOP_rest_web_service
                                 else if (Map.getInstance().getFood()[j].getType() == 3)
                                 {
 
-                                    //Debug.WriteLine("Neshieldinto playerio pozicija: " + players[i].getPosition());
-                                    //Debug.WriteLine("Pries shielda Playeri color: " + players[i].getColor());
-                                    //Debug.WriteLine("x1: " + x1 + " x2: " + x2 + " y1: " + y1 + " y2: " + y2);
                                     AbstractPlayer shield = new Shield(players[i]);
                                     players[i] = shield;
-                                    //Debug.WriteLine("Player i: " + players[i].getName());
-                                    //Debug.WriteLine("Po shieldo Playeri color: " + playeri.getColor());
-                                    //Debug.WriteLine("x1: " + x1 + " x2: " + x2 + " y1: " + y1 + " y2: " + y2);
-                                    //Debug.WriteLine("Shieldinto playerio pozicija: " + shield.getPosition());
-                                    ////Debug.WriteLine("Shieldinto playerio spalva: " + shield.getPosition());
-                                    ////players[i] = (Player)shield;
-                                    ////newFood = UnitCreator.createUnit(3);
-                                    //Debug.WriteLine("Mano tipas yra: " + shield.getName());
-                                    //Unit gun = new Gun((AbstractPlayer)shield);
-                                    //Debug.WriteLine("Mano tipas yra: " + gun.getName());
                                 }
                                 else if (Map.getInstance().getFood()[j].getType() == 4)
                                 {
-                                    //Debug.WriteLine("Pries gun Player i: " + players[i].getName());
                                     AbstractPlayer sizeUp = new SizeUp(players[i]);
                                     players[i] = sizeUp;
-                                    //Debug.WriteLine("Player i: " + players[i].getName());
                                 }
 
                                 else if (Map.getInstance().getFood()[j].getType() == 5)
                                 {
-                                    //Debug.WriteLine("Pries gun Player i: " + players[i].getName());
                                     AbstractPlayer sizeDown = new SizeDown(players[i]);
                                     players[i] = sizeDown;
-                                    //Debug.WriteLine("Player i: " + players[i].getName());
                                 }
 
-                                Map.getInstance().removeFood(j);
                                 newFood.setPosition(new Point(rnd.Next(0, 1900), rnd.Next(0, 1000)));
-                                Map.getInstance().addFood(newFood);
+                                Map.getInstance().putFood(newFood, j);
                                 Map.getInstance().notifyObservers();
 
                                 players[i].setSize(new Size(players[i].getSize().Width + 5, players[i].getSize().Height + 5));
                                 Map.getInstance().setPlayer(i, players[i]);
                             }
-                            //if (food[j].position.X >= x1 && food[j].position.X <= x2 && food[j].position.Y >= y1 && food[j].position.Y >= y2)
-                            //{
-                            //    GameController.map.removeFood(j);
-                            //    players[i].playerSize = new Size(players[i].playerSize.Width + 1, players[i].playerSize.Height + 1);
-                            //    GameController.map.setPlayer(i, players[i]);
-                            //}
                         }
 
                         for (int j = 0; j < 8; j++)

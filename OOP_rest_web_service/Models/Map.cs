@@ -15,7 +15,7 @@ namespace OOP_rest_web_service.Models
 
         static public List<Unit> players;
 
-        static public List<Unit> food;
+        static public Unit[] food;
 
         static private List<IMyObserver> observersList;
 
@@ -37,7 +37,9 @@ namespace OOP_rest_web_service.Models
             Random rnd = new Random();
             CloneFactory cloneFactory = new CloneFactory();
             observersList = new List<IMyObserver>();
-            int foodCount = 20;
+
+            int foodCount = 50;
+            food = new Unit[foodCount];
 
             players = new List<Unit>();
             players.Add(UnitCreator.createUnit(0));
@@ -48,7 +50,6 @@ namespace OOP_rest_web_service.Models
             players.Add(UnitCreator.createUnit(0));
             players.Add(UnitCreator.createUnit(0));
             players.Add(UnitCreator.createUnit(0));
-            food = new List<Unit>();
 
             //1900 x 1000
 
@@ -88,11 +89,11 @@ namespace OOP_rest_web_service.Models
 
             // food.Add(sizeUp);
             // food.Add(sizeDown);
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < foodCount; i++)
             {
                 Unit addFood = FlyweightFood.GetFood(new Point(rnd.Next(1, 1899), rnd.Next(1, 999)));
-                Debug.WriteLine("DEBUGGING FOOD: " + addFood.getType());
-                food.Add(addFood);
+                addFood.index = i;
+                food[i] = addFood;
             }
         }
 
@@ -102,13 +103,28 @@ namespace OOP_rest_web_service.Models
             {
                 players.Add(unit);
             }
-            else
+        }
+
+        public void addUnit(Unit unit, int i)
+        {
+            food[i] = unit;
+        }
+
+        public IEnumerable<Unit> getUnits()
+        {
+            foreach(Unit p in players)
             {
-                food.Add(unit);
+                yield return p;
+            }
+
+            foreach(Unit f in food)
+            {
+                yield return f;
             }
         }
 
-        public List<Unit> getFood()
+
+        public Unit[] getFood()
         {
             return food;
         }
@@ -120,9 +136,9 @@ namespace OOP_rest_web_service.Models
         {
             return (AbstractPlayer)players[i];
         }
-        public Food GetFood(int i)
+        public TemplateFood GetFood(int i)
         {
-            return (Food)food[i];
+            return (TemplateFood)food[i];
         }
 
         public Unit getFood(int i)
@@ -134,27 +150,17 @@ namespace OOP_rest_web_service.Models
             return players.ElementAt(i);
         }
 
-        public void addFood(Unit f)
+        public void putFood(Unit f, int i)
         {
-            food.Add(f);
+            food[i] = f;
         }
         public void addPlayer(Unit player)
         {
             players.Add(player);
         }
-
-        public void setFood(int i, Unit f)
-        {
-            food.Insert(i, f);
-        }
         public void setPlayer(int i, Unit player)
         {
             players[i] = player;
-        }
-
-        public void removeFood(int i)
-        {
-            food.RemoveAt(i);
         }
         public void removePlayers(int i)
         {
