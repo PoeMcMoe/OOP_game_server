@@ -6,15 +6,36 @@ using System.Threading.Tasks;
 using System.Drawing;
 using OOP_rest_web_service.Interfaces;
 using System.Diagnostics;
+using OOP_rest_web_service.Models.Memento;
 
 namespace OOP_rest_web_service.Models
 {
     public class Player : AbstractPlayer, IMyObserver
     {
-
-        public Player(Point position, Color color, Size size) : base(position, color, size)
+        private PlayerState playerState;
+        public Player(Point position, Color color, Size size, PlayerState newState) : base(position, color, size)
         {
+            playerState = newState;
+        }
 
+        public void RestoreState(Memento.Memento memento)
+        {
+            memento.GetState(this);
+        }
+
+        public PlayerState GetState()
+        {
+            return playerState;
+        }
+
+        public void SetState(PlayerState newState)
+        {
+            playerState = newState;
+        }
+
+        public Memento.Memento SaveState()
+        {
+            return new Memento.Memento(playerState);
         }
 
         public override Color getColor()
