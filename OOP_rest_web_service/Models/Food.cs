@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace OOP_rest_web_service.Models
 {
-    public class Food : FoodTemplate
+    public class TemplateFood : FoodTemplate
     {
-        public Food(Point position)
+        public TemplateFood(Point position)
         {
             this.position = position;
         }
 
         public override bool Equals(Unit other)
         {
-            if (other is Food)
+            if (other is TemplateFood)
             {
-                Food b = (Food)other;
+                TemplateFood b = (TemplateFood)other;
                 if (this.position == b.getPosition())
                 {
                     return true;

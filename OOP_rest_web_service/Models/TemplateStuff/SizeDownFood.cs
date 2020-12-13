@@ -15,9 +15,9 @@ namespace OOP_rest_web_service.Models.TemplateStuff
 
         public override bool Equals(Unit other)
         {
-            if (other is Food)
+            if (other is TemplateFood)
             {
-                Food b = (Food)other;
+                TemplateFood b = (TemplateFood)other;
                 if (this.position == b.getPosition())
                 {
                     return true;
