@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using OOP_rest_web_service.Interfaces;
+using OOP_rest_web_service.Models.Memento;
 
 namespace OOP_rest_web_service.Models
 {
@@ -13,11 +14,11 @@ namespace OOP_rest_web_service.Models
         Player prevState;
         public RewindCommand(Player player)
         {
-            this.player = new Player(player.getPosition(), player.getColor(), player.getSize());
+            this.player = new Player(player.getPosition(), player.getColor(), player.getSize(), new PlayerState());
         }
         public void Execute()
         {
-            prevState = new Player(player.getPosition(), player.getColor(), player.getSize());
+            prevState = new Player(player.getPosition(), player.getColor(), player.getSize(), new PlayerState());
         }
 
         public void Undo()

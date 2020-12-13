@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+using OOP_rest_web_service.Models.Memento;
 
 namespace OOP_rest_web_service.Models
 {
@@ -13,7 +14,7 @@ namespace OOP_rest_web_service.Models
         {
             if (type == 0)
             {
-                return new Player(new Point(), Color.White, new Size());
+                return new Player(new Point(), Color.White, new Size(), new PlayerState());
             }
             //normal food
             else if (type == 1)

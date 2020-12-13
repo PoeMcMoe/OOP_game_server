@@ -7,8 +7,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 using OOP_rest_web_service.Models;
+using OOP_rest_web_service.Models.Interpretor;
 
 namespace OOP_rest_web_service.Controllers
 {
@@ -16,6 +18,16 @@ namespace OOP_rest_web_service.Controllers
     [ApiController]
     public class GameController : ControllerBase
     {
+        [Route("commandline")]
+        [HttpPost]
+        public string CommandLine([FromBody] string content)
+        {
+            string[] tokens = content.Split(" ");
+
+            Expression expression = ExpressionFactory.getExpression(tokens);
+
+            return expression.execute();
+        }
         // GET: api/Game
         //Gets everything
         [HttpGet]
