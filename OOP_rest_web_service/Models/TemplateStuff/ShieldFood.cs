@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOP_rest_web_service.Models.TemplateStuff
 {
-    public class ShieldFood : FoodTemplate
+   sealed public class ShieldFood : FoodTemplate
     {
         public ShieldFood(Point position)
         {
@@ -15,9 +15,9 @@ namespace OOP_rest_web_service.Models.TemplateStuff
 
         public override bool Equals(Unit other)
         {
-            if (other is TemplateFood)
+            if (other is Food)
             {
-                TemplateFood b = (TemplateFood)other;
+                Food b = (Food)other;
                 if (this.position == b.getPosition())
                 {
                     return true;

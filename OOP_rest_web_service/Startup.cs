@@ -212,6 +212,7 @@ namespace OOP_rest_web_service
                             Debug.WriteLine("Food x1 {0}, y1 {1}  \nPlayer x1 {2}  y1 {3}", fx1, fy1, x1, y1);
                             if (doOverlap(new Point(x1, y2), new Point(x2, y1), new Point(fx1, fy2), new Point(fx2, fy1)))
                             {
+
                                 Debug.WriteLine("OVERLAP DETECTED");
 
                                 //Debug.WriteLine("Overlapped x1: " + x1 + " x2: " + x2 + " y1: " + y1 + " y2: " + y2);
@@ -247,6 +248,7 @@ namespace OOP_rest_web_service
 
                                 players[i].setSize(new Size(players[i].getSize().Width + 5, players[i].getSize().Height + 5));
                                 Map.getInstance().setPlayer(i, players[i]);
+
                             }
                         }
 

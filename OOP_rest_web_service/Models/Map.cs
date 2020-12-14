@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace OOP_rest_web_service.Models
 {
@@ -144,9 +145,9 @@ namespace OOP_rest_web_service.Models
         {
             return (AbstractPlayer)players[i];
         }
-        public TemplateFood GetFood(int i)
+        public Food GetFood(int i)
         {
-            return (TemplateFood)food[i];
+            return (Food)food[i];
         }
 
         public Unit getFood(int i)
@@ -187,7 +188,8 @@ namespace OOP_rest_web_service.Models
 
         public void notifyObservers()
         {
-            for (int i = 0; i < observersList.Count; i++)
+
+             for (int i = 0; i < observersList.Count; i++)
             {
                 observersList[i].update();
 
