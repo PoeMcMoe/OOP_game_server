@@ -40,7 +40,7 @@ namespace OOP_rest_web_service.Models
             CloneFactory cloneFactory = new CloneFactory();
             observersList = new List<IMyObserver>();
 
-            int foodCount = 50;
+            int foodCount = 500;
             food = new Unit[foodCount];
 
             players = new List<Unit>();
@@ -101,8 +101,21 @@ namespace OOP_rest_web_service.Models
                 food[i] = addFood;
             }
             st.Stop();
-            Debug.WriteLine("STOPWATCH: " + st.Elapsed);
+            Debug.WriteLine("Flyweight took time: " + st.ElapsedMilliseconds);
+            Debug.WriteLine("Flyweight used memory: " + (GC.GetTotalMemory(false) / 1024) + " kb");
 
+
+            //st.Start();
+            //for (int i = 0; i < foodCount; i++)
+            //{
+            //    Unit addFood = UnitCreator.createUnit(1);
+            //    addFood.setPosition(new Point(rnd.Next(1, 1899), rnd.Next(1, 999)));
+            //    addFood.index = i;
+            //    food[i] = addFood;
+            //}
+            //st.Stop();
+            //Debug.WriteLine("Factory took time: " + st.ElapsedMilliseconds);
+            //Debug.WriteLine("Factory used memory: " + (GC.GetTotalMemory(false) / 1024) + " kb");
         }
 
         public void addUnit(Unit unit)
