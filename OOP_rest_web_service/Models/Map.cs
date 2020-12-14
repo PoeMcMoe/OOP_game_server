@@ -40,7 +40,7 @@ namespace OOP_rest_web_service.Models
             CloneFactory cloneFactory = new CloneFactory();
             observersList = new List<IMyObserver>();
 
-            int foodCount = 500;
+            int foodCount = 50;
             food = new Unit[foodCount];
 
             players = new List<Unit>();
