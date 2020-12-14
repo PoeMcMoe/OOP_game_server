@@ -7,8 +7,6 @@ namespace OOP_rest_web_service.Models.Interpretor
 {
     public class NullExpression : Expression
     {
-        Expression left, right;
-
         public NullExpression()
         {
 
