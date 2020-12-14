@@ -19,7 +19,7 @@ namespace OOP_rest_web_service.Models
             //normal food
             else if (type == 1)
             {
-                TemplateFood food = new TemplateFood(new Point());
+                Food food = new Food(new Point());
                 food.makeFood();
                 return food;
             }

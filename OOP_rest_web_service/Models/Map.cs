@@ -26,6 +26,7 @@ namespace OOP_rest_web_service.Models
         public Map()
         {
             initMap();
+
         }
 
         public static Map getInstance()
@@ -90,12 +91,18 @@ namespace OOP_rest_web_service.Models
 
             // food.Add(sizeUp);
             // food.Add(sizeDown);
+
+            Stopwatch st = new Stopwatch();
+            st.Start();
             for (int i = 0; i < foodCount; i++)
             {
                 Unit addFood = FlyweightFood.GetFood(new Point(rnd.Next(1, 1899), rnd.Next(1, 999)));
                 addFood.index = i;
                 food[i] = addFood;
             }
+            st.Stop();
+            Debug.WriteLine("STOPWATCH: " + st.Elapsed);
+
         }
 
         public void addUnit(Unit unit)
