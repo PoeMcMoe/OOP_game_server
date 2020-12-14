@@ -89,12 +89,20 @@ namespace OOP_rest_web_service.Models
 
             // food.Add(sizeUp);
             // food.Add(sizeDown);
-            for (int i = 0; i < foodCount; i++)
+
+            Stopwatch stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+            for (int i = 0; i < 500; i++)
             {
                 Unit addFood = FlyweightFood.GetFood(new Point(rnd.Next(1, 1899), rnd.Next(1, 999)));
                 addFood.index = i;
                 food[i] = addFood;
             }
+            stopwatch.Stop();
+            Debug.WriteLine("Flyweight sugeneruoti užtruko: " + stopwatch.ElapsedMilliseconds);
+            Debug.WriteLine("Su Flyweight sugeneravus naudojama atmintis: " + GC.GetTotalMemory(false));
+            
         }
 
         public void addUnit(Unit unit)
