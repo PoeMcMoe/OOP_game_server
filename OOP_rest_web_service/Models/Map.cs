@@ -26,7 +26,6 @@ namespace OOP_rest_web_service.Models
         public Map()
         {
             initMap();
-
         }
 
         public static Map getInstance()
@@ -200,12 +199,15 @@ namespace OOP_rest_web_service.Models
 
         public void notifyObservers()
         {
-
-             for (int i = 0; i < observersList.Count; i++)
+            for (int i = 0; i < observersList.Count; i++)
             {
                 observersList[i].update();
-
             }
+        }
+
+        public void RemoveFood(int i)
+        {
+            food[i] = null;
         }
 
         public void setPlayerPostition(int index, Point location)

@@ -56,9 +56,7 @@ namespace OOP_rest_web_service
             }
 
             PeriodicMapCheck(TimeSpan.FromSeconds(0.1));
-            PeriodicCollisionCheck(TimeSpan.FromSeconds(0.1));
             CheckForPowerUps(TimeSpan.FromSeconds(0.1));
-
         }
 
         public async Task CheckForPowerUps(TimeSpan timeSpan)
@@ -175,122 +173,9 @@ namespace OOP_rest_web_service
             }
         }
 
-        public async Task PeriodicCollisionCheck(TimeSpan interval)
-        {
-            while (true)
-            {
-                List<AbstractPlayer> players = Map.getInstance().getPlayers().Cast<AbstractPlayer>().ToList();
-                //Player somePlayer = (Player)players[1];
-                //Debug.WriteLine("Some player color: " + somePlayer.getColor());
-                //List<Food> food = Map.getInstance().getFood().Cast<Food>().ToList();
+        
+        
 
-                List<FoodTemplate> food = new List<FoodTemplate>();
-                foreach(Unit u in Map.getInstance().getFood())
-                {
-                    FoodTemplate f = (FoodTemplate)u;
-                    food.Add(f);
-                }
-
-                for (int i = 0; i < 8; i++)
-                {
-                    if (players[i].getColor() != Color.White && allHitboxes[i] == true)
-                    {
-                        int x1 = players[i].getPosition().X;
-                        int x2 = players[i].getPosition().X + players[i].getSize().Width;
-                        int y1 = players[i].getPosition().Y;
-                        int y2 = players[i].getPosition().Y + players[i].getSize().Height;
-                        //Debug.WriteLine("Pradzia x1: " + x1 + " x2: " + x2 + " y1: " + y1 + " y2: " + y2);
-
-
-                        for (int j = 0; j < food.Count; j++)
-                        {
-                            int fx1 = food[j].getPosition().X - 10 / 2;
-                            int fx2 = food[j].getPosition().X + 10 / 2;
-                            int fy1 = food[j].getPosition().Y - 10 / 2;
-                            int fy2 = food[j].getPosition().Y + 10 / 2;
-
-                            Debug.WriteLine("Food x1 {0}, y1 {1}  \nPlayer x1 {2}  y1 {3}", fx1, fy1, x1, y1);
-                            if (doOverlap(new Point(x1, y2), new Point(x2, y1), new Point(fx1, fy2), new Point(fx2, fy1)))
-                            {
-
-                                Debug.WriteLine("OVERLAP DETECTED");
-
-                                //Debug.WriteLine("Overlapped x1: " + x1 + " x2: " + x2 + " y1: " + y1 + " y2: " + y2);
-                                Unit newFood = UnitCreator.createUnit(1);
-
-                                if (Map.getInstance().getFood()[j].getType() == 2)
-                                {
-                                    players[i].setConfused(true);
-                                    newFood = UnitCreator.createUnit(2);
-                                }
-
-                                else if (Map.getInstance().getFood()[j].getType() == 3)
-                                {
-
-                                    AbstractPlayer shield = new Shield(players[i]);
-                                    players[i] = shield;
-                                }
-                                else if (Map.getInstance().getFood()[j].getType() == 4)
-                                {
-                                    AbstractPlayer sizeUp = new SizeUp(players[i]);
-                                    players[i] = sizeUp;
-                                }
-
-                                else if (Map.getInstance().getFood()[j].getType() == 5)
-                                {
-                                    AbstractPlayer sizeDown = new SizeDown(players[i]);
-                                    players[i] = sizeDown;
-                                }
-
-                                newFood.setPosition(new Point(rnd.Next(0, 1900), rnd.Next(0, 1000)));
-                                Map.getInstance().putFood(newFood, j);
-                                Map.getInstance().notifyObservers();
-
-                                players[i].setSize(new Size(players[i].getSize().Width + 5, players[i].getSize().Height + 5));
-                                Map.getInstance().setPlayer(i, players[i]);
-
-                            }
-                        }
-
-                        for (int j = 0; j < 8; j++)
-                        {
-                            if (i != j && players[i].getColor() != Color.White && players[j].getColor() != Color.White)
-                            {
-                                if (players[j].getPosition().X >= x1 && players[j].getPosition().X <= x2 && players[j].getPosition().Y >= y1 && players[j].getPosition().Y >= y2)
-                                {
-                                    if (players[i].getSize().Width > players[j].getSize().Width)
-                                    {
-                                        Map.getInstance().setPlayer(j, UnitCreator.createUnit(0));
-                                        players[i].setSize(new Size(players[i].getSize().Width + 15, players[i].getSize().Height + 15));
-                                        Map.getInstance().setPlayer(i, players[i]);
-                                    }
-                                    else if (players[i].getSize().Width < players[j].getSize().Width)
-                                    {
-                                        Map.getInstance().setPlayer(i, UnitCreator.createUnit(0));
-                                        players[j].setSize(new Size(players[j].getSize().Width + 15, players[j].getSize().Height + 15));
-                                        Map.getInstance().setPlayer(j, players[j]);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                await Task.Delay(interval);
-            }
-        }
-
-        // Returns true if two rectangles (l1, r1) and (l2, r2) overlap 
-        bool doOverlap(Point l1, Point r1, Point l2, Point r2)
-        {
-            // If one rectangle is on left side of other 
-            if (l1.X >= r2.X || l2.X >= r1.X)
-                return false;
-
-            // If one rectangle is above other 
-            if (l1.Y <= r2.Y || l2.Y <= r1.Y)
-                return false;
-
-            return true;
-        }
+        
     }
 }
