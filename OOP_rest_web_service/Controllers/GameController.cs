@@ -120,7 +120,6 @@ namespace OOP_rest_web_service.Controllers
         [HttpPost]
         public void Post([FromBody]string unit)
         {
-            CheckCollisions();
             UnitData un = JsonConvert.DeserializeObject<UnitData>(unit);
             if(un.position.X == -9999 && un.position.Y == -9999)
             {
@@ -156,6 +155,8 @@ namespace OOP_rest_web_service.Controllers
                 Map.getInstance().register(mapUnit);
                 Map.getInstance().setPlayer(GetIndex(mapUnit.getColor()), mapUnit);
             }
+            CheckCollisions();
+
         }
 
         public void CheckCollisions()
