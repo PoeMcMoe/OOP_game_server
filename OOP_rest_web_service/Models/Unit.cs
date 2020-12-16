@@ -45,6 +45,8 @@ namespace OOP_rest_web_service.Models
 
         //Food/Player
         public int getType() { return type; }
+
+        public void setType(int type) {this.type = type;}
         public bool isConfused() { return confused; }
 
         public object Clone()
