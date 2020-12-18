@@ -19,6 +19,8 @@ namespace OOP_rest_web_service.Models
 
         public int index;
 
+        public Color color;
+
         //Food/Player
         public virtual Point getPosition()
         {

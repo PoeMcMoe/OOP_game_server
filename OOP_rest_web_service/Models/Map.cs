@@ -11,6 +11,8 @@ namespace OOP_rest_web_service.Models
 {
     public class Map : ISubject
     {
+        public int mode = -1;
+
         //singleton
         private static Map instance = new Map();
 
@@ -91,17 +93,7 @@ namespace OOP_rest_web_service.Models
             // food.Add(sizeUp);
             // food.Add(sizeDown);
 
-            Stopwatch st = new Stopwatch();
-            st.Start();
-            for (int i = 0; i < foodCount; i++)
-            {
-                Unit addFood = FlyweightFood.GetFood(new Point(rnd.Next(1, 1899), rnd.Next(1, 999)));
-                addFood.index = i;
-                food[i] = addFood;
-            }
-            st.Stop();
-            Debug.WriteLine("Flyweight took time: " + st.ElapsedMilliseconds);
-            Debug.WriteLine("Flyweight used memory: " + (GC.GetTotalMemory(false) / 1024) + " kb");
+
 
 
             //st.Start();

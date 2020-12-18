@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOP_rest_web_service.Models
 {
-    public class Food : FoodTemplate
+    sealed public class Food : FoodTemplate
     {
         public Food(Point position)
         {

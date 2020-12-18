@@ -8,10 +8,12 @@ namespace OOP_rest_web_service.Models.TemplateStuff
 {
     sealed public class ConfuseFood : FoodTemplate
     {
+        
         public ConfuseFood(Point position)
         {
             this.position = position;
         }
+
 
         public override bool Equals(Unit other)
         {
