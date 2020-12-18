@@ -71,7 +71,7 @@ namespace OOP_rest_web_service.Controllers
             for (int i = 0; i < Map.getInstance().getPlayers().Count; i++)
             {
                 AbstractPlayer p = (AbstractPlayer)Map.getInstance().getPlayers()[i];
-                list.Add(new UnitData { position = p.getPosition(), type = 0, playerColor = p.getColor(), playerSize = p.getSize(), confused = p.isConfused() });
+                list.Add(new UnitData { position = p.getPosition(), type = 0, playerColor = p.getColor(), playerSize = p.getSize(), confused = p.isConfused(), foodListChanged = p.getFoodListChanged()});
             }
 
             return list;
