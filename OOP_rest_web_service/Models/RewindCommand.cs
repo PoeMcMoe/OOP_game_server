@@ -33,6 +33,7 @@ namespace OOP_rest_web_service.Models
             Memento.Memento memento = stateCaretaker.Get(0);
             PlayerState previousState = memento.GetState();
             Map.getInstance().setPlayer(index, new Player(previousState.position, previousState.color, previousState.size, new PlayerState()));
+            Map.getInstance().playersRewind[index] = new Player(previousState.position, previousState.color, previousState.size, new PlayerState());
             //Map.players[index] = new Player(previousState.position, previousState.color, previousState.size, new PlayerState());
         }
     }

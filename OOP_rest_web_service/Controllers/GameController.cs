@@ -99,7 +99,7 @@ namespace OOP_rest_web_service.Controllers
         // GET: api/Game/rewind
         [Route("rewind/{colorname}/{command}")]
         [HttpGet]
-        public void Rewind(string command, string colorname)
+        public string Rewind(string command, string colorname)
         {
             Color playerColor = Color.FromName(colorname);
             int index = Startup.allColors.IndexOf(playerColor);
@@ -109,11 +109,16 @@ namespace OOP_rest_web_service.Controllers
                 RewindCommand rew = new RewindCommand(player);
                 Startup.commandInvoker.SetCommand(rew);
                 Startup.commandInvoker.ExecuteCommand();
+                return "it's set";
             }
             if (command == "trigger" && Startup.commandInvoker.CommandExists())
             { 
                 Startup.commandInvoker.UndoCommand();
+                Point lastPoint = Map.getInstance().playersRewind.ElementAt(index).getPosition();
+                return string.Format("{0};{1}", lastPoint.X, lastPoint.Y);
             }
+
+            return "wrong command";
         }
 
         // POST: api/Game
@@ -341,5 +346,6 @@ namespace OOP_rest_web_service.Controllers
 
             return playerColor;
         }
+
     }
 }
