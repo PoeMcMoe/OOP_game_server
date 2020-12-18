@@ -1,4 +1,6 @@
-﻿using OOP_rest_web_service.Models.TemplateStuff;
+﻿using OOP_rest_web_service.Interfaces;
+using OOP_rest_web_service.Models.TemplateStuff;
+using OOP_rest_web_service.Visitors;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,10 +13,24 @@ namespace OOP_rest_web_service.Models
 {
     public class FlyweightFood
     {
-        private static Dictionary<Point, Unit> foodDictionary = new Dictionary<Point, Unit>();
 
-        public static Unit GetFood(Point point)
-        {
+    private static Dictionary<Point, Unit> foodDictionary = new Dictionary<Point, Unit>();
+
+        public static Unit GetFood(Point point, int mode)
+        { 
+            Visitor visitor;
+            switch (mode)
+            {
+                case 1:
+                    visitor = new DefaultVisitor();
+                    break;
+                case 2:
+                    visitor = new SimpleVisitor();
+                    break;
+                default:
+                    throw new Exception("Invalid game mode");
+            }
+
             try
             {
                 return foodDictionary[point];
@@ -28,22 +44,27 @@ namespace OOP_rest_web_service.Models
                     case 1:
                         food = new Food(point);
                         food.makeFood();
+                        visitor.Visit((Food)food);
                         break;
                     case 2:
                         food = new ConfuseFood(point);
                         food.makeFood();
+                        visitor.Visit((ConfuseFood)food);
                         break;
                     case 3:
                         food = new ShieldFood(point);
                         food.makeFood();
+                        visitor.Visit((ShieldFood)food);
                         break;
                     case 4:
                         food = new SizeUpFood(point);
                         food.makeFood();
+                        visitor.Visit((SizeUpFood)food);
                         break;
                     case 5:
                         food = new SizeDownFood(point);
                         food.makeFood();
+                        visitor.Visit((SizeDownFood)food);
                         break;
                     default:
                         break;

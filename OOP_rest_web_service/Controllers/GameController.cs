@@ -57,7 +57,7 @@ namespace OOP_rest_web_service.Controllers
                 }
                 else
                 {
-                    list.Add(new UnitData { position = u.getPosition(), type = u.getType() });
+                    list.Add(new UnitData { position = u.getPosition(), type = u.getType(), playerColor = u.color });
                 }
             }
             return list;
@@ -84,7 +84,7 @@ namespace OOP_rest_web_service.Controllers
             List<UnitData> list = new List<UnitData>();
             foreach (Unit f in Map.getInstance().getFood())
             {
-                list.Add(new UnitData { position = f.getPosition(), type = f.getType() });
+                list.Add(new UnitData { position = f.getPosition(), type = f.getType(), playerColor = f.color});
             }
             return list;
         }
@@ -120,6 +120,7 @@ namespace OOP_rest_web_service.Controllers
         [HttpPost]
         public void Post([FromBody]string unit)
         {
+
             UnitData un = JsonConvert.DeserializeObject<UnitData>(unit);
             if(un.position.X == -9999 && un.position.Y == -9999)
             {
@@ -127,6 +128,27 @@ namespace OOP_rest_web_service.Controllers
             }
 
             if (un.playerColor == Color.White) { return; }
+
+            if (un.mode != -1)
+            {
+                if(Map.getInstance().mode == -1)
+                {
+                    Map.getInstance().mode = un.mode;
+                    Random rnd = new Random();
+                    Stopwatch st = new Stopwatch();
+                    st.Start();
+                    for (int i = 0; i < Map.getInstance().getFood().Length; i++)
+                    {
+                        Unit addFood = FlyweightFood.GetFood(new Point(rnd.Next(1, 1899), rnd.Next(1, 999)), un.mode);
+                        addFood.index = i;
+                        Map.getInstance().getFood()[i] = addFood;
+                    }
+                    st.Stop();
+                    Debug.WriteLine("Flyweight took time: " + st.ElapsedMilliseconds);
+                    Debug.WriteLine("Flyweight used memory: " + (GC.GetTotalMemory(false) / 1024) + " kb");
+                }
+
+            }
 
             int index = Startup.allColors.IndexOf(un.playerColor);
 
@@ -155,6 +177,9 @@ namespace OOP_rest_web_service.Controllers
                 Map.getInstance().register(mapUnit);
                 Map.getInstance().setPlayer(GetIndex(mapUnit.getColor()), mapUnit);
             }
+
+
+
             CheckCollisions();
 
         }
