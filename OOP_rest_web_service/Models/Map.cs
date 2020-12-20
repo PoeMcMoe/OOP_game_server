@@ -16,11 +16,13 @@ namespace OOP_rest_web_service.Models
         //singleton
         private static Map instance = new Map();
 
-        static public List<Unit> players;
+        public List<Unit> playersRewind;
 
-        static public Unit[] food;
+        public static List<Unit> players;
 
-        static private List<IMyObserver> observersList;
+        public static Unit[] food;
+
+        private static List<IMyObserver> observersList;
 
         Unit foodItem = UnitCreator.createUnit(1);
         Unit confuseFoodItem = UnitCreator.createUnit(2);
@@ -37,6 +39,16 @@ namespace OOP_rest_web_service.Models
 
         public void initMap()
         {
+            playersRewind = new List<Unit>();
+            playersRewind.Add(UnitCreator.createUnit(0));
+            playersRewind.Add(UnitCreator.createUnit(0));
+            playersRewind.Add(UnitCreator.createUnit(0));
+            playersRewind.Add(UnitCreator.createUnit(0));
+            playersRewind.Add(UnitCreator.createUnit(0));
+            playersRewind.Add(UnitCreator.createUnit(0));
+            playersRewind.Add(UnitCreator.createUnit(0));
+            playersRewind.Add(UnitCreator.createUnit(0));
+
             Random rnd = new Random();
             CloneFactory cloneFactory = new CloneFactory();
             observersList = new List<IMyObserver>();
