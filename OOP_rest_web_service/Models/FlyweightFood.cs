@@ -4,6 +4,7 @@ using OOP_rest_web_service.Visitors;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -27,6 +28,9 @@ namespace OOP_rest_web_service.Models
                 case 2:
                     visitor = new SimpleVisitor();
                     break;
+                case 3:
+                    visitor = new MysteryVisitor();
+                    break;
                 default:
                     throw new Exception("Invalid game mode");
             }
@@ -39,7 +43,7 @@ namespace OOP_rest_web_service.Models
             {
                 Random random = new Random();
                 FoodTemplate food = null;
-                switch (random.Next(1, 5))
+                switch (random.Next(1, 6))
                 {
                     case 1:
                         food = new Food(point);
@@ -65,6 +69,7 @@ namespace OOP_rest_web_service.Models
                         food = new SizeDownFood(point);
                         food.makeFood();
                         visitor.Visit((SizeDownFood)food);
+                        Debug.WriteLine("YAY");
                         break;
                     default:
                         break;

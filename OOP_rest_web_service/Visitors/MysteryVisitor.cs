@@ -9,31 +9,31 @@ using System.Threading.Tasks;
 
 namespace OOP_rest_web_service.Visitors
 {
-    public class DefaultVisitor : Visitor
+    public class MysteryVisitor : Visitor
     {
         public void Visit(Food item)
         {
-            item.color = Color.DarkGreen;
+            item.color = Color.Black;
         }
 
         public void Visit(ConfuseFood item)
         {
-            item.color = Color.Aquamarine;
+            item.color = Color.Black;
         }
 
         public void Visit(ShieldFood item)
         {
-            item.color = Color.DarkBlue;
+            item.color = Color.Black;
         }
 
         public void Visit(SizeDownFood item)
         {
-            item.color = Color.DarkSalmon;
+            item.color = Color.Black;
         }
 
         public void Visit(SizeUpFood item)
         {
-            item.color = Color.DarkRed;
+            item.color = Color.Black;
         }
     }
 }
