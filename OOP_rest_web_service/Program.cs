@@ -20,6 +20,8 @@ namespace OOP_rest_web_service
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
+
+
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
