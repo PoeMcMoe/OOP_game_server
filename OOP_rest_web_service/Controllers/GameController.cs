@@ -125,7 +125,7 @@ namespace OOP_rest_web_service.Controllers
         [HttpPost]
         public void Post([FromBody]string unit)
         {
-
+            //This is kinda stupid
             UnitData un = JsonConvert.DeserializeObject<UnitData>(unit);
             if(un.position.X == -9999 && un.position.Y == -9999)
             {
