@@ -22,6 +22,8 @@ namespace OOP_rest_web_service.Models
 
         public static Unit[] food;
 
+        public static CenterGenerator generator;
+
         private static List<IMyObserver> observersList;
 
         Unit foodItem = UnitCreator.createUnit(1);
@@ -39,6 +41,8 @@ namespace OOP_rest_web_service.Models
 
         public void initMap()
         {
+            generator = new CenterGenerator();
+
             playersRewind = new List<Unit>();
             playersRewind.Add(UnitCreator.createUnit(0));
             playersRewind.Add(UnitCreator.createUnit(0));
@@ -151,6 +155,10 @@ namespace OOP_rest_web_service.Models
         public Unit[] getFood()
         {
             return food;
+        }
+        public CenterGenerator getGenerator()
+        {
+            return generator;
         }
         public List<Unit> getPlayers()
         {

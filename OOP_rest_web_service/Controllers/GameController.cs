@@ -89,6 +89,13 @@ namespace OOP_rest_web_service.Controllers
             return list;
         }
 
+        [Route("generator")]
+        [HttpGet]
+        public CenterGenerator GetGenerator()
+        {
+            return Map.getInstance().getGenerator();
+        }
+
         // GET: api/Game/5
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)

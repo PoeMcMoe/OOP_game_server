@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OOP_rest_web_service.Controllers;
 using OOP_rest_web_service.Models;
+using OOP_rest_web_service.Models.TemplateStuff;
 
 namespace OOP_rest_web_service
 {
@@ -57,6 +58,8 @@ namespace OOP_rest_web_service
 
             PeriodicMapCheck(TimeSpan.FromSeconds(0.1));
             CheckForPowerUps(TimeSpan.FromSeconds(0.1));
+            PeriodicGeneratorCheck(TimeSpan.FromSeconds(5));
+
         }
 
         public async Task CheckForPowerUps(TimeSpan timeSpan)
@@ -173,9 +176,70 @@ namespace OOP_rest_web_service
             }
         }
 
-        
-        
+        public async Task PeriodicGeneratorCheck(TimeSpan interval)
+        {
+            var r = new Random();
+            while (true)
+            {
+                var mode = Map.getInstance().mode;
+                var generator = Map.getInstance().getGenerator();
 
-        
+
+                generator.operate();
+
+
+                var X = generator.position.X;
+                var Y = generator.position.Y;
+
+                List<Point> points = new List<Point>();
+
+                points.Add(new Point(X + 55, Y + 47));
+                points.Add(new Point(X + 60, Y + 9));
+                points.Add(new Point(X + 43, Y - 41));
+                points.Add(new Point(X + 54, Y + 66));
+                points.Add(new Point(X + 7, Y + 49));
+                points.Add(new Point(X - 40, Y + 56));
+                points.Add(new Point(X + 55, Y + 47));
+                points.Add(new Point(X + 60, Y + 9));
+                points.Add(new Point(X + 43, Y - 41));
+                points.Add(new Point(X + 54, Y + 66));
+                points.Add(new Point(X + 7, Y + 49));
+                points.Add(new Point(X - 40, Y + 56));
+
+                Point nextPoint = points[r.Next(0, 6)];
+
+
+                switch (generator.generatingObjectType)
+                {
+                    case 3:
+                        var food1 = new SizeDownFood(nextPoint);
+                        food1.SetColor(Color.DarkSalmon);
+                        food1.makeFood();
+                        Map.getInstance().putFood(food1, r.Next(1, 49));
+                        break;
+                    case 2:
+                        var food2 = new SizeUpFood(nextPoint);
+                        food2.SetColor(Color.DarkRed);
+                        food2.makeFood();
+                        Map.getInstance().putFood(food2, r.Next(1, 49));
+                        break;
+                    case 1:
+                        var food3 = new Food(nextPoint);
+                        food3.SetColor(Color.DarkGreen);
+                        food3.makeFood();
+                        Map.getInstance().putFood(food3, r.Next(1, 49));
+                        break;
+                    case 0:
+                        break;
+                    default: break;
+                }
+                await Task.Delay(interval);
+            }
+        }
+
+
+
+
+
     }
 }
