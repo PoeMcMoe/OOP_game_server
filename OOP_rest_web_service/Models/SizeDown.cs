@@ -54,6 +54,18 @@ namespace OOP_rest_web_service.Models
         {
             wrappee.setConfused(confused);
         }
+        public override void setSizingUp(bool confused)
+        {
+            wrappee.setSizingUp(confused);
+        }
+
+       
+
+        public override void setEatenNormal(bool confused)
+        {
+            wrappee.setEatenNormal(confused);
+        }
+
 
         public override bool getFoodListChanged()
         {

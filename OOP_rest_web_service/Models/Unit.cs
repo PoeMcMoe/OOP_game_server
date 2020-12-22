@@ -17,6 +17,12 @@ namespace OOP_rest_web_service.Models
 
         protected bool confused = false;
 
+        protected bool sizingUp = false;
+
+        protected bool sizingDown = false;
+
+        protected bool eatenNormal = false;
+
         public int index;
 
         public Color color;
@@ -50,6 +56,12 @@ namespace OOP_rest_web_service.Models
 
         public void setType(int type) {this.type = type;}
         public bool isConfused() { return confused; }
+
+        public bool isSizingUp() { return sizingUp; }
+
+        public bool isSizingDown() { return sizingDown; }
+
+        public bool isEatenNormal() { return eatenNormal; }
 
         public object Clone()
         {

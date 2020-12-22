@@ -53,7 +53,7 @@ namespace OOP_rest_web_service.Controllers
                 if(u.getType() == 0)
                 {
                     AbstractPlayer p = (AbstractPlayer)u;
-                    list.Add(new UnitData { position = p.getPosition(), type = 0, playerColor = p.getColor(), playerSize = p.getSize(), confused = p.isConfused() });
+                    list.Add(new UnitData { position = p.getPosition(), type = 0, playerColor = p.getColor(), playerSize = p.getSize(), confused = p.isConfused(), eatenNormal = p.isEatenNormal(), sizingDown = p.isSizingDown(), sizingUp = p.isSizingUp()  });
                 }
                 else
                 {
@@ -71,7 +71,7 @@ namespace OOP_rest_web_service.Controllers
             for (int i = 0; i < Map.getInstance().getPlayers().Count; i++)
             {
                 AbstractPlayer p = (AbstractPlayer)Map.getInstance().getPlayers()[i];
-                list.Add(new UnitData { position = p.getPosition(), type = 0, playerColor = p.getColor(), playerSize = p.getSize(), confused = p.isConfused(), foodListChanged = p.getFoodListChanged()});
+                list.Add(new UnitData { position = p.getPosition(), type = 0, playerColor = p.getColor(), playerSize = p.getSize(), confused = p.isConfused(), foodListChanged = p.getFoodListChanged(), eatenNormal = p.isEatenNormal(), sizingDown = p.isSizingDown(), sizingUp = p.isSizingUp() });
             }
 
             return list;
@@ -168,6 +168,9 @@ namespace OOP_rest_web_service.Controllers
             mapUnit.setPosition(un.position);
             mapUnit.setColor(un.playerColor);
             mapUnit.setConfused(false);
+            mapUnit.setEatenNormal(false);
+            mapUnit.setSizingDown(false);
+            mapUnit.setSizingUp(false);
 
             AbstractPlayer playerFromMap = (AbstractPlayer)Map.getInstance().getPlayers()[index];
             mapUnit.setSize(playerFromMap.getSize());
@@ -179,6 +182,9 @@ namespace OOP_rest_web_service.Controllers
                 AbstractPlayer player = (AbstractPlayer)Map.getInstance().getPlayers()[index];
                 player.setPosition(mapUnit.getPosition());
                 player.setConfused(false);
+                player.setEatenNormal(false);
+                player.setSizingDown(false);
+                player.setSizingUp(false);
                 player.setFoodListChangedFalse();
 
                 Map.getInstance().setPlayer(index, player);
@@ -241,6 +247,11 @@ namespace OOP_rest_web_service.Controllers
                             //Debug.WriteLine("Overlapped x1: " + x1 + " x2: " + x2 + " y1: " + y1 + " y2: " + y2);
                             Unit newFood = UnitCreator.createUnit(1);
 
+                            if (Map.getInstance().getFood()[j].getType() == 1)
+                            {
+                                players[i].setEatenNormal(true);
+                            }
+
                             if (Map.getInstance().getFood()[j].getType() == 2)
                             {
                                 players[i].setConfused(true);
@@ -256,13 +267,17 @@ namespace OOP_rest_web_service.Controllers
                             else if (Map.getInstance().getFood()[j].getType() == 4)
                             {
                                 AbstractPlayer sizeUp = new SizeUp(players[i]);
+                                sizeUp.setSizingUp(true);
                                 players[i] = sizeUp;
+                                players[i].setSizingUp(true);
                             }
 
                             else if (Map.getInstance().getFood()[j].getType() == 5)
                             {
                                 AbstractPlayer sizeDown = new SizeDown(players[i]);
+                                sizeDown.setSizingDown(true);
                                 players[i] = sizeDown;
+                                players[i].setSizingDown(true);
                             }
 
                             Random rnd = new Random();

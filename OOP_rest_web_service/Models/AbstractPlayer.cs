@@ -56,6 +56,20 @@ namespace OOP_rest_web_service.Models
             this.confused = confused;
         }
 
+        public virtual void setEatenNormal(bool status)
+        {
+            this.eatenNormal = status;
+        }
+
+        public virtual void setSizingUp(bool status)
+        {
+            this.sizingUp = status;
+        }
+        public virtual void setSizingDown(bool status)
+        {
+            this.sizingDown = status;
+        }
+
         public override void setName(string name)
         {
             base.setName(name);

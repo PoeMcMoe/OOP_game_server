@@ -89,6 +89,22 @@ namespace OOP_rest_web_service.Models
             base.confused = confused;
         }
 
+        public override void setSizingUp(bool confused)
+        {
+            base.sizingUp = confused;
+        }
+        public override void setSizingDown(bool confused)
+        {
+            base.sizingDown = confused;
+        }
+
+        public override void setEatenNormal(bool confused)
+        {
+            base.eatenNormal = confused;
+        }
+
+
+
         public override Point getPosition()
         {
             return base.getPosition();
