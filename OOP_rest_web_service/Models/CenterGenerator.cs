@@ -1,4 +1,5 @@
-﻿using OOP_rest_web_service.State;
+﻿using OOP_rest_web_service.Mediator;
+using OOP_rest_web_service.State;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,17 +8,18 @@ using System.Threading.Tasks;
 
 namespace OOP_rest_web_service.Models
 {
-    public class CenterGenerator
+    public class CenterGenerator : Colleague
     {
 		private GeneratorState currentState;
 		public Color color;
 		public Point position;
 		public int generatingObjectType;
 
-		public CenterGenerator()
+		public CenterGenerator(IMediator mediator) : base(mediator)
 		{
 			this.position = new Point(800,500);
 			this.color = Color.Yellow;
+			m = mediator;
 
 			GeneratorState charging = new ChargingState();
 			GeneratorState friendly = new FriendlyState();
@@ -44,5 +46,27 @@ namespace OOP_rest_web_service.Models
 			this.currentState = nextState;
 		}
 
+		public override ColleagueType getType()
+		{
+			return ColleagueType.generator;
+		}
+
+		public override void receiveSignal(string msg)
+		{
+			Console.WriteLine("GEN POS CHANGED");
+			if(msg == "CIRCLE")
+			{
+				position.X = 1200;
+			}
+			if (msg == "CROSS")
+			{
+				position.X = 400;
+			}
+		}
+
+		public override void sendSignal(string msg)
+		{
+			Console.WriteLine("GENERATOR : sent" + msg);
+		}
 	}
 }

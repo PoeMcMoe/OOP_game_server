@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using OOP_rest_web_service.Interfaces;
+using OOP_rest_web_service.Mediator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,6 +25,12 @@ namespace OOP_rest_web_service.Models
 
         public static CenterGenerator generator;
 
+        public static Circle circle;
+
+        public static Cross cross;
+
+        public static IMediator mediator;
+
         private static List<IMyObserver> observersList;
 
         Unit foodItem = UnitCreator.createUnit(1);
@@ -41,7 +48,19 @@ namespace OOP_rest_web_service.Models
 
         public void initMap()
         {
-            generator = new CenterGenerator();
+            mediator = new TeleportationMediator();
+
+            generator = new CenterGenerator(mediator);
+            circle = new Circle(mediator);
+            cross = new Cross(mediator);
+
+            mediator.registerColleague(circle);
+            mediator.registerColleague(cross);
+            mediator.registerColleague(generator);
+            
+            
+
+
 
             playersRewind = new List<Unit>();
             playersRewind.Add(UnitCreator.createUnit(0));
@@ -159,6 +178,18 @@ namespace OOP_rest_web_service.Models
         public CenterGenerator getGenerator()
         {
             return generator;
+        }
+        public Cross getCross()
+        {
+            return cross;
+        }
+        public IMediator getMediator()
+        {
+            return mediator;
+        }
+        public Circle getCircle()
+        {
+            return circle;
         }
         public List<Unit> getPlayers()
         {

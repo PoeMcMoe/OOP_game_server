@@ -96,6 +96,20 @@ namespace OOP_rest_web_service.Controllers
             return Map.getInstance().getGenerator();
         }
 
+        [Route("circle")]
+        [HttpGet]
+        public Circle GetCircle()
+        {
+            return Map.getInstance().getCircle();
+        }
+
+        [Route("cross")]
+        [HttpGet]
+        public Cross GetCross()
+        {
+            return Map.getInstance().getCross();
+        }
+
         // GET: api/Game/5
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
@@ -199,6 +213,55 @@ namespace OOP_rest_web_service.Controllers
 
 
             CheckCollisions();
+            CheckJonasCollisions();
+
+        }
+
+        public void CheckJonasCollisions()
+        {
+            List<AbstractPlayer> players = Map.getInstance().getPlayers().Cast<AbstractPlayer>().ToList();
+            var cross = Map.getInstance().getCross();
+            var circle = Map.getInstance().getCircle();
+            var mediator = Map.getInstance().getMediator();
+
+            for (int i = 0; i < 8; i++)
+            {
+                if (players[i].getColor() != Color.White && Startup.allHitboxes[i] == true)
+                {
+                    int x1 = players[i].getPosition().X;
+                    int x2 = players[i].getPosition().X + players[i].getSize().Width;
+                    int y1 = players[i].getPosition().Y;
+                    int y2 = players[i].getPosition().Y + players[i].getSize().Height;
+                    //Debug.WriteLine("Pradzia x1: " + x1 + " x2: " + x2 + " y1: " + y1 + " y2: " + y2);
+
+                    int fx1 = cross.position.X - 70 / 2;
+                    int fx2 = cross.position.X + 70 / 2;
+                    int fy1 = cross.position.Y - 70 / 2;
+                    int fy2 = cross.position.Y + 70 / 2;
+
+                    int ffx1 = circle.position.X - 70 / 2;
+                    int ffx2 = circle.position.X + 70 / 2;
+                    int ffy1 = circle.position.Y - 70 / 2;
+                    int ffy2 = circle.position.Y + 70 / 2;
+
+                    Debug.WriteLine("Food x1 {0}, y1 {1}  \nPlayer x1 {2}  y1 {3}", fx1, fy1, x1, y1);
+                    if (doOverlap(new Point(x1, y2), new Point(x2, y1), new Point(fx1, fy2), new Point(fx2, fy1)))
+                    {
+
+                        Debug.WriteLine("OVERLAP DETECTED CROSS");
+                        cross.sendSignal("CROSS");
+
+                    }
+                    Debug.WriteLine("Food x1 {0}, y1 {1}  \nPlayer x1 {2}  y1 {3}", ffx1, ffy1, x1, y1);
+                    if (doOverlap(new Point(x1, y2), new Point(x2, y1), new Point(ffx1, ffy2), new Point(ffx2, ffy1)))
+                    {
+
+                        Debug.WriteLine("OVERLAP DETECTED CIRCLE");
+                        circle.sendSignal("CIRCLE");
+
+                    }
+                }
+            }
 
         }
 
